@@ -1,11 +1,20 @@
 package game_demo;
 
-public class Stage implements Runnable {
+import java.awt.Canvas;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.image.BufferStrategy;
+
+public class Stage extends Canvas implements Runnable {
 	private double FPS, TPS, APS;
 	private boolean running;
-	private Thread thread;
+	public Thread thread;
 	
 	public Stage(double FPS, double TPS, double APS) {
+		this.setPreferredSize(new Dimension(Window.WIDTH, Window.HEIGHT));
+		this.setMinimumSize(new Dimension(Window.WIDTH, Window.HEIGHT));
+		this.setMaximumSize(new Dimension(Window.WIDTH, Window.HEIGHT));
 		this.FPS = FPS;
 		this.TPS = TPS;
 		this.APS = APS;
@@ -26,18 +35,10 @@ public class Stage implements Runnable {
 	public void stop() {
 		if(this.running)
 			this.running = false;
-		
-		try {
-			this.thread.join();
-		}
-		catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		
-		System.exit(0);
 	}
 	
 	public void run() {
+		this.init();
 		double deltaFrames = 0, deltaTicks = 0, deltaAnimations = 0;
 		double fpsNs = 1000000000 / this.FPS;
 		double tpsNs = 1000000000 / this.TPS;
@@ -76,12 +77,22 @@ public class Stage implements Runnable {
 				System.out.printf("FPS: %d, TPS: %d, APS: %d\n", frames, ticks, animations);
 				frames = ticks = animations = 0;
 			}
-			
 		}
 	}
 	
 	public void render() {
+		BufferStrategy bs = this.getBufferStrategy();
 		
+		if(bs == null) {
+			this.createBufferStrategy(3);
+			return;
+		}
+		
+		Graphics g = bs.getDrawGraphics();
+		
+		
+		g.dispose();
+		bs.show();
 	}
 	
 	public void tick() {
