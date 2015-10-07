@@ -1,27 +1,30 @@
 package game_demo;
 
 import java.awt.Canvas;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
 
-public class Stage extends Canvas implements Runnable {
+public class Stage extends Canvas implements Runnable, InputSensible {
 	private double FPS, TPS, APS;
 	private boolean running;
+	private KeyboardInputListener keyboardInputListener;
 	public Thread thread;
 	
 	public Stage(double FPS, double TPS, double APS) {
-		this.setPreferredSize(new Dimension(Window.WIDTH, Window.HEIGHT));
-		this.setMinimumSize(new Dimension(Window.WIDTH, Window.HEIGHT));
-		this.setMaximumSize(new Dimension(Window.WIDTH, Window.HEIGHT));
 		this.FPS = FPS;
 		this.TPS = TPS;
 		this.APS = APS;
+			
+		this.setPreferredSize(new Dimension(Window.WIDTH, Window.HEIGHT));
+		this.setMinimumSize(new Dimension(Window.WIDTH, Window.HEIGHT));
+		this.setMaximumSize(new Dimension(Window.WIDTH, Window.HEIGHT));
 	}
 	
 	public void init() {
-		
+		this.keyboardInputListener = new KeyboardInputListener(this);
+		this.addKeyListener(this.keyboardInputListener);
 	}
 	
 	public void start() {
@@ -101,5 +104,11 @@ public class Stage extends Canvas implements Runnable {
 	
 	public void animate() {
 		
+	}
+	
+	public void KeyEvent() {
+		if(this.keyboardInputListener.isKeyDown(KeyEvent.VK_ESCAPE)) {
+			this.stop();
+		}
 	}
 }
