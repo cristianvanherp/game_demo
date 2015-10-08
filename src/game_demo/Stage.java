@@ -11,11 +11,13 @@ public class Stage extends Canvas implements Runnable, InputSensible {
 	private boolean running;
 	private KeyboardInputListener keyboardInputListener;
 	public Thread thread;
+	public Entity entity;
 	
 	public Stage(double FPS, double TPS, double APS) {
 		this.FPS = FPS;
 		this.TPS = TPS;
 		this.APS = APS;
+		this.entity = new Entity(40, 40, 100, 100);
 			
 		this.setPreferredSize(new Dimension(Window.WIDTH, Window.HEIGHT));
 		this.setMinimumSize(new Dimension(Window.WIDTH, Window.HEIGHT));
@@ -93,6 +95,7 @@ public class Stage extends Canvas implements Runnable, InputSensible {
 		
 		Graphics g = bs.getDrawGraphics();
 		
+		this.entity.render(g, this);
 		
 		g.dispose();
 		bs.show();
