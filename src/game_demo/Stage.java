@@ -1,6 +1,7 @@
 package game_demo;
 
 import java.awt.Canvas;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
@@ -12,11 +13,13 @@ public class Stage extends Canvas implements Runnable, InputSensible {
 	private KeyboardInputListener keyboardInputListener;
 	public Thread thread;
 	public Entity entity;
+	public Color bgColor;
 	
-	public Stage(double FPS, double TPS, double APS) {
+	public Stage(double FPS, double TPS, double APS, Color bgColor) {
 		this.FPS = FPS;
 		this.TPS = TPS;
 		this.APS = APS;
+		this.bgColor = bgColor;
 		this.entity = new Entity(40, 40, 100, 100);
 			
 		this.setPreferredSize(new Dimension(Window.WIDTH, Window.HEIGHT));
@@ -94,8 +97,9 @@ public class Stage extends Canvas implements Runnable, InputSensible {
 		}
 		
 		Graphics g = bs.getDrawGraphics();
-		
-		this.entity.render(g, this);
+		g.setColor(this.bgColor);
+		g.fillRect(0, 0, Window.WIDTH, Window.HEIGHT);
+		this.entity.renderBoundaries(g, this);
 		
 		g.dispose();
 		bs.show();
@@ -109,9 +113,10 @@ public class Stage extends Canvas implements Runnable, InputSensible {
 		
 	}
 	
-	public void KeyEvent() {
+	public void keyEvent() {
 		if(this.keyboardInputListener.isKeyDown(KeyEvent.VK_ESCAPE)) {
 			this.stop();
 		}
+		this.entity.keyEvent(this.keyboardInputListener);
 	}
 }

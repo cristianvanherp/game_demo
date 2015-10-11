@@ -3,9 +3,9 @@ package game_demo;
 import java.util.List;
 
 public class Game {
-	public static int FPS = 60;
-	public static int TPS = 30;
-	public static int APS = 7;
+	public static double FPS = 60;
+	public static double TPS = 30;
+	public static double APS = 7;
 	
 	public List<Stage> stages;
 	public Stage currentStage;

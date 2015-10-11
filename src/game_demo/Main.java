@@ -7,9 +7,9 @@ import java.util.List;
 public class Main {
 	public static void main(String args[]) {
 		List<Stage> stages = new ArrayList();
-		stages.add(new Stage(30, Game.TPS, Game.APS));
-		stages.add(new Stage(40, Game.TPS, Game.APS));
-		stages.add(new Stage(50, Game.TPS, Game.APS));
+		stages.add(new Stage(30, Game.TPS, Game.APS, new Color(0, 0, 0)));
+		stages.add(new Stage(40, Game.TPS, Game.APS, new Color(0, 0, 0)));
+		stages.add(new Stage(50, Game.TPS, Game.APS, new Color(0, 0, 0)));
 		
 		try {
 			Game game = new Game(stages);

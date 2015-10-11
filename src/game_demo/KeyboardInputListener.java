@@ -17,13 +17,13 @@ public class KeyboardInputListener extends KeyAdapter {
 	public void keyPressed(KeyEvent e) {
 		if(!this.keysDown.contains(e.getKeyCode()))
 			this.keysDown.add((Integer)e.getKeyCode());
-		this.inputSensible.KeyEvent();
+		this.inputSensible.keyEvent();
 	}
 	
 	public void keyReleased(KeyEvent e) {
 		if(this.keysDown.contains(e.getKeyCode()))
 			this.keysDown.remove((Integer)e.getKeyCode());
-		this.inputSensible.KeyEvent();
+		this.inputSensible.keyEvent();
 	}
 	
 	public boolean isKeyDown(Integer key) {
