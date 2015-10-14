@@ -20,7 +20,7 @@ public class Stage extends Canvas implements Runnable, InputSensible {
 		this.TPS = TPS;
 		this.APS = APS;
 		this.bgColor = bgColor;
-		this.entity = new Entity(40, 40, 100, 100);
+		this.entity = new Entity(40, 40, 100, 100, 5);
 			
 		this.setPreferredSize(new Dimension(Window.WIDTH, Window.HEIGHT));
 		this.setMinimumSize(new Dimension(Window.WIDTH, Window.HEIGHT));
@@ -106,7 +106,7 @@ public class Stage extends Canvas implements Runnable, InputSensible {
 	}
 	
 	public void tick() {
-		
+		this.entity.tick();
 	}
 	
 	public void animate() {

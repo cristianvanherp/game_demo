@@ -11,14 +11,17 @@ public abstract class GameObject extends Rectangle {
 	private static int sideBoundWidthRate = 15;
 	private static int centerBoundHeightRate = 50;
 	private static int centerBoundWidthRate = 60;
+	private int velx, vely, speed;
 	
-	public GameObject(int width, int height) {
+	public GameObject(int width, int height, int speed) {
 		this.width = width;
 		this.height = height;
 		this.boundaryLeft = new Rectangle();
 		this.boundaryRight = new Rectangle();
 		this.boundaryTop = new Rectangle();
 		this.boundaryBottom = new Rectangle();
+		this.velx = this.vely = 0;
+		this.speed = speed;
 		this.x = this.y = 0;
 
 		try {
@@ -31,13 +34,15 @@ public abstract class GameObject extends Rectangle {
 		this.adjustBoundaries();
 	}
 	
-	public GameObject(int width, int height, int x, int y) {
+	public GameObject(int width, int height, int x, int y, int speed) {
 		this.width = width;
 		this.height = height;
 		this.boundaryLeft = new Rectangle();
 		this.boundaryRight = new Rectangle();
 		this.boundaryTop = new Rectangle();
 		this.boundaryBottom = new Rectangle();
+		this.velx = this.vely = 0;
+		this.speed = speed;
 		this.x = x;
 		this.y = y;
 		
@@ -76,6 +81,30 @@ public abstract class GameObject extends Rectangle {
 	public void setY(int y) {
 		this.y = y;
 		this.adjustBoundaries();
+	}
+	
+	public void setVelx(int velx) {
+		this.velx = velx;
+	}
+	
+	public int getVelx() {
+		return this.velx;
+	}
+	
+	public void setVely(int vely) {
+		this.vely = vely;
+	}
+	
+	public int getVely() {
+		return this.vely;
+	}
+	
+	public void setSpeed(int speed) {
+		this.speed = speed;
+	}
+	
+	public int getSpeed() {
+		return this.speed;
 	}
 	
 	//Utility methods
