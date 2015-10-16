@@ -118,10 +118,7 @@ public class Stage extends Canvas implements Runnable, InputSensible {
 	
 	public void tick() {
 		for(GameObject gameObject: this.gameObjects) {
-			gameObject.tick();
-		}
-		for(GameObject gameObject: this.gameObjects) {
-			gameObject.handleCollision(this.gameObjects);
+			gameObject.tick(this.gameObjects);
 		}
 	}
 	

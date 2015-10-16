@@ -15,9 +15,10 @@ public class Entity extends GameObject {
 	}
 	
 	//Game Object methods
-	public void tick() {
+	public void tick(List<GameObject> gameObjects) {
 		this.setX(this.x + this.getVelx());
 		this.setY(this.y + this.getVely());
+		this.handleCollision(gameObjects);
 	}
 
 	public void animate() {
@@ -51,7 +52,7 @@ public class Entity extends GameObject {
 	}
 	
 	//Utility methods
-	public void handleCollision(List<GameObject> gameObjects) {
+	private void handleCollision(List<GameObject> gameObjects) {
 		for(GameObject gameObject: gameObjects) {
 			if(this.isTopColliding(gameObject)) {
 				this.setY((int)gameObject.getMaxY() + 1);

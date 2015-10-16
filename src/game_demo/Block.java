@@ -21,9 +21,10 @@ public class Block extends GameObject {
 	}
 	
 	//Game Object methods
-	public void tick() {
+	public void tick(List<GameObject> gameObjects) {
 		this.setX(this.x + this.getVelx());
 		this.setY(this.y + this.getVely());
+		this.handleCollision(gameObjects);
 	}
 
 	public void animate() {

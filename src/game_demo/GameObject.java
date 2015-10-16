@@ -56,11 +56,10 @@ public abstract class GameObject extends Bound {
 		this.adjustBoundaries();
 	}
 	
-	public abstract void tick();
+	public abstract void tick(List<GameObject> gameObjects);
 	public abstract void animate();
 	public abstract void render(Graphics g, Canvas canvas);
 	public abstract void keyEvent(KeyboardInputListener keyboardInputListener);
-	public abstract void handleCollision(List<GameObject> gameObjects);
 	
 	public void renderBoundaries(Graphics g, Canvas canvas) {
 		g.setColor(new Color(255, 255, 255));
