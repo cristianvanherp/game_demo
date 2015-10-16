@@ -3,6 +3,7 @@ package game_demo;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.List;
 
 public abstract class GameObject extends Bound {
 	private Bound boundaryLeft, boundaryRight, boundaryTop, boundaryBottom;
@@ -55,10 +56,11 @@ public abstract class GameObject extends Bound {
 		this.adjustBoundaries();
 	}
 	
-	public abstract void tick(Block block);
+	public abstract void tick();
 	public abstract void animate();
 	public abstract void render(Graphics g, Canvas canvas);
 	public abstract void keyEvent(KeyboardInputListener keyboardInputListener);
+	public abstract void handleCollision(List<GameObject> gameObjects);
 	
 	public void renderBoundaries(Graphics g, Canvas canvas) {
 		g.setColor(new Color(255, 255, 255));
@@ -156,6 +158,30 @@ public abstract class GameObject extends Bound {
 		this.adjustBoundaryRight();
 		this.adjustBoundaryTop();
 		this.adjustBoundaryBottom();
+	}
+	
+	protected boolean isBottomColliding(GameObject gameObject) {
+		if(this.getBoundaryBottom().collides(gameObject))
+			return true;
+		return false;
+	}
+	
+	protected boolean isTopColliding(GameObject gameObject) {
+		if(this.getBoundaryTop().collides(gameObject))
+			return true;
+		return false;
+	}
+	
+	protected boolean isLeftColliding(GameObject gameObject) {
+		if(this.getBoundaryLeft().collides(gameObject))
+			return true;
+		return false;
+	}
+	
+	protected boolean isRightColliding(GameObject gameObject) {
+		if(this.getBoundaryRight().collides(gameObject))
+			return true;
+		return false;
 	}
 	
 	//Validation methods

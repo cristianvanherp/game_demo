@@ -1,9 +1,9 @@
 package game_demo;
 
 import java.awt.Canvas;
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
+import java.util.List;
 
 public class Entity extends GameObject {
 	public Entity(int width, int height, int speed) {
@@ -15,11 +15,9 @@ public class Entity extends GameObject {
 	}
 	
 	//Game Object methods
-	public void tick(Block block) {
+	public void tick() {
 		this.setX(this.x + this.getVelx());
 		this.setY(this.y + this.getVely());
-		
-		this.handleCollision(block);
 	}
 
 	public void animate() {
@@ -53,45 +51,23 @@ public class Entity extends GameObject {
 	}
 	
 	//Utility methods
-	private boolean isBottomColliding(Block block) {
-		if(this.getBoundaryBottom().collides(block))
-			return true;
-		return false;
-	}
-	
-	private boolean isTopColliding(Block block) {
-		if(this.getBoundaryTop().collides(block))
-			return true;
-		return false;
-	}
-	
-	private boolean isLeftColliding(Block block) {
-		if(this.getBoundaryLeft().collides(block))
-			return true;
-		return false;
-	}
-	
-	private boolean isRightColliding(Block block) {
-		if(this.getBoundaryRight().collides(block))
-			return true;
-		return false;
-	}
-	
-	private void handleCollision(Block block) {
-		if(this.isTopColliding(block)) {
-			this.setY((int)block.getMaxY() + 1);
-		}
-		
-		if(this.isBottomColliding(block)) {
-			this.setY((int)block.getMinY() - 1 - this.height);
-		}
-		
-		if(this.isLeftColliding(block)) {
-			this.setX((int)block.getMaxX() + 1);
-		}
-		
-		if(this.isRightColliding(block)) {
-			this.setX((int)block.getMinX() - 1 - this.width);
+	public void handleCollision(List<GameObject> gameObjects) {
+		for(GameObject gameObject: gameObjects) {
+			if(this.isTopColliding(gameObject)) {
+				this.setY((int)gameObject.getMaxY() + 1);
+			}
+			
+			if(this.isBottomColliding(gameObject)) {
+				this.setY((int)gameObject.getMinY() - 1 - this.height);
+			}
+			
+			if(this.isLeftColliding(gameObject)) {
+				this.setX((int)gameObject.getMaxX() + 1);
+			}
+			
+			if(this.isRightColliding(gameObject)) {
+				this.setX((int)gameObject.getMinX() - 1 - this.width);
+			}
 		}
 	}
 }
