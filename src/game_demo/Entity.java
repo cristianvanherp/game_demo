@@ -3,16 +3,9 @@ package game_demo;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 
 public class Entity extends GameObject {
-	private Rectangle boundaryLeft, boundaryRight, boundaryTop, boundaryBottom;
-	private static int sideBoundHeightRate = 75;
-	private static int sideBoundWidthRate = 15;
-	private static int centerBoundHeightRate = 50;
-	private static int centerBoundWidthRate = 60;
-	
 	public Entity(int width, int height, int speed) {
 		super(width, height, speed);
 	}
@@ -22,9 +15,11 @@ public class Entity extends GameObject {
 	}
 	
 	//Game Object methods
-	public void tick() {
+	public void tick(Block block) {
 		this.setX(this.x + this.getVelx());
 		this.setY(this.y + this.getVely());
+		
+		this.handleCollision(block);
 	}
 
 	public void animate() {
@@ -54,6 +49,49 @@ public class Entity extends GameObject {
 		}
 		else {
 			this.setVely(0);
+		}
+	}
+	
+	//Utility methods
+	private boolean isBottomColliding(Block block) {
+		if(this.getBoundaryBottom().collides(block))
+			return true;
+		return false;
+	}
+	
+	private boolean isTopColliding(Block block) {
+		if(this.getBoundaryTop().collides(block))
+			return true;
+		return false;
+	}
+	
+	private boolean isLeftColliding(Block block) {
+		if(this.getBoundaryLeft().collides(block))
+			return true;
+		return false;
+	}
+	
+	private boolean isRightColliding(Block block) {
+		if(this.getBoundaryRight().collides(block))
+			return true;
+		return false;
+	}
+	
+	private void handleCollision(Block block) {
+		if(this.isTopColliding(block)) {
+			this.setY((int)block.getMaxY() + 1);
+		}
+		
+		if(this.isBottomColliding(block)) {
+			this.setY((int)block.getMinY() - 1 - this.height);
+		}
+		
+		if(this.isLeftColliding(block)) {
+			this.setX((int)block.getMaxX() + 1);
+		}
+		
+		if(this.isRightColliding(block)) {
+			this.setX((int)block.getMinX() - 1 - this.width);
 		}
 	}
 }

@@ -13,6 +13,7 @@ public class Stage extends Canvas implements Runnable, InputSensible {
 	private KeyboardInputListener keyboardInputListener;
 	public Thread thread;
 	public Entity entity;
+	public Block block;
 	public Color bgColor;
 	
 	public Stage(double FPS, double TPS, double APS, Color bgColor) {
@@ -21,6 +22,7 @@ public class Stage extends Canvas implements Runnable, InputSensible {
 		this.APS = APS;
 		this.bgColor = bgColor;
 		this.entity = new Entity(40, 40, 100, 100, 5);
+		this.block= new Block(60, 60, 100, 400, 5);
 			
 		this.setPreferredSize(new Dimension(Window.WIDTH, Window.HEIGHT));
 		this.setMinimumSize(new Dimension(Window.WIDTH, Window.HEIGHT));
@@ -100,13 +102,15 @@ public class Stage extends Canvas implements Runnable, InputSensible {
 		g.setColor(this.bgColor);
 		g.fillRect(0, 0, Window.WIDTH, Window.HEIGHT);
 		this.entity.renderBoundaries(g, this);
+		this.block.renderBoundaries(g, this);
 		
 		g.dispose();
 		bs.show();
 	}
 	
 	public void tick() {
-		this.entity.tick();
+		this.block.tick(this.block);
+		this.entity.tick(this.block);
 	}
 	
 	public void animate() {

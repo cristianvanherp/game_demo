@@ -3,10 +3,9 @@ package game_demo;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Rectangle;
 
-public abstract class GameObject extends Rectangle {
-	private Rectangle boundaryLeft, boundaryRight, boundaryTop, boundaryBottom;
+public abstract class GameObject extends Bound {
+	private Bound boundaryLeft, boundaryRight, boundaryTop, boundaryBottom;
 	private static int sideBoundHeightRate = 75;
 	private static int sideBoundWidthRate = 15;
 	private static int centerBoundHeightRate = 50;
@@ -16,10 +15,10 @@ public abstract class GameObject extends Rectangle {
 	public GameObject(int width, int height, int speed) {
 		this.width = width;
 		this.height = height;
-		this.boundaryLeft = new Rectangle();
-		this.boundaryRight = new Rectangle();
-		this.boundaryTop = new Rectangle();
-		this.boundaryBottom = new Rectangle();
+		this.boundaryLeft = new Bound();
+		this.boundaryRight = new Bound();
+		this.boundaryTop = new Bound();
+		this.boundaryBottom = new Bound();
 		this.velx = this.vely = 0;
 		this.speed = speed;
 		this.x = this.y = 0;
@@ -37,10 +36,10 @@ public abstract class GameObject extends Rectangle {
 	public GameObject(int width, int height, int x, int y, int speed) {
 		this.width = width;
 		this.height = height;
-		this.boundaryLeft = new Rectangle();
-		this.boundaryRight = new Rectangle();
-		this.boundaryTop = new Rectangle();
-		this.boundaryBottom = new Rectangle();
+		this.boundaryLeft = new Bound();
+		this.boundaryRight = new Bound();
+		this.boundaryTop = new Bound();
+		this.boundaryBottom = new Bound();
 		this.velx = this.vely = 0;
 		this.speed = speed;
 		this.x = x;
@@ -56,7 +55,7 @@ public abstract class GameObject extends Rectangle {
 		this.adjustBoundaries();
 	}
 	
-	public abstract void tick();
+	public abstract void tick(Block block);
 	public abstract void animate();
 	public abstract void render(Graphics g, Canvas canvas);
 	public abstract void keyEvent(KeyboardInputListener keyboardInputListener);
@@ -105,6 +104,22 @@ public abstract class GameObject extends Rectangle {
 	
 	public int getSpeed() {
 		return this.speed;
+	}
+	
+	public Bound getBoundaryLeft() {
+		return this.boundaryLeft;
+	}
+	
+	public Bound getBoundaryRight() {
+		return this.boundaryRight;
+	}
+	
+	public Bound getBoundaryTop() {
+		return this.boundaryTop;
+	}
+	
+	public Bound getBoundaryBottom() {
+		return this.boundaryBottom;
 	}
 	
 	//Utility methods
