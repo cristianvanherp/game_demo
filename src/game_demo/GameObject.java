@@ -12,6 +12,7 @@ public abstract class GameObject extends Bound {
 	private static int centerBoundHeightRate = 50;
 	private static int centerBoundWidthRate = 60;
 	private int velx, vely, speed;
+	private boolean falling;
 	
 	public GameObject(int width, int height, int speed) {
 		this.width = width;
@@ -22,6 +23,7 @@ public abstract class GameObject extends Bound {
 		this.boundaryBottom = new Bound();
 		this.velx = this.vely = 0;
 		this.speed = speed;
+		this.falling = false;
 		this.x = this.y = 0;
 
 		try {
@@ -56,7 +58,7 @@ public abstract class GameObject extends Bound {
 		this.adjustBoundaries();
 	}
 	
-	public abstract void tick(List<GameObject> gameObjects);
+	public abstract void tick(List<GameObject> gameObjects, int gravity, int maxFallSpeed);
 	public abstract void animate();
 	public abstract void render(Graphics g, Canvas canvas);
 	public abstract void keyEvent(KeyboardInputListener keyboardInputListener);
@@ -107,6 +109,14 @@ public abstract class GameObject extends Bound {
 		return this.speed;
 	}
 	
+	public boolean isFalling() {
+		return falling;
+	}
+
+	public void setFalling(boolean falling) {
+		this.falling = falling;
+	}
+
 	public Bound getBoundaryLeft() {
 		return this.boundaryLeft;
 	}

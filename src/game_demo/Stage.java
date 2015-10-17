@@ -16,20 +16,33 @@ public class Stage extends Canvas implements Runnable, InputSensible {
 	public Thread thread;
 	public Entity entity;
 	public List<GameObject> gameObjects;
+	public int gravity, maxFallingSpeed;
 	
-	public Stage(double FPS, double TPS, double APS) {
+	public Stage(double FPS, double TPS, double APS, int gravity, int maxFallingSpeed) {
 		this.FPS = FPS;
 		this.TPS = TPS;
 		this.APS = APS;
-		this.entity = new Entity(40, 40, 100, 100, 2);
+		this.gravity = gravity;
+		this.maxFallingSpeed = maxFallingSpeed;
+		this.entity = new Entity(40, 40, 100, 100, 3, 17);
 		this.gameObjects = new ArrayList<GameObject>();
 		this.gameObjects.add(this.entity);
+		
+		this.gameObjects.add(new Block(40, 40, 182, 277, 5));
+		this.gameObjects.add(new Block(40, 40, 141, 277, 5));
+		this.gameObjects.add(new Block(40, 40, 100, 277, 5));
+		this.gameObjects.add(new Block(40, 40, 100, 318, 5));
+		this.gameObjects.add(new Block(40, 40, 100, 359, 5));
 		this.gameObjects.add(new Block(40, 40, 100, 400, 5));
-		this.gameObjects.add(new Block(40, 40, 140, 400, 5));
-		this.gameObjects.add(new Block(40, 40, 180, 400, 5));
-		this.gameObjects.add(new Block(40, 40, 100, 400, 5));
-		this.gameObjects.add(new Block(40, 40, 100, 360, 5));
-		this.gameObjects.add(new Block(40, 40, 100, 320, 5));
+		this.gameObjects.add(new Block(40, 40, 141, 400, 5));
+		this.gameObjects.add(new Block(40, 40, 182, 400, 5));
+		this.gameObjects.add(new Block(40, 40, 223, 400, 5));
+		this.gameObjects.add(new Block(40, 40, 264, 400, 5));
+		this.gameObjects.add(new Block(40, 40, 305, 400, 5));
+		this.gameObjects.add(new Block(40, 40, 346, 400, 5));
+		this.gameObjects.add(new Block(40, 40, 387, 400, 5));
+		this.gameObjects.add(new Block(40, 40, 428, 400, 5));
+		this.gameObjects.add(new Block(40, 40, 469, 400, 5));
 		
 		this.setPreferredSize(new Dimension(Window.WIDTH, Window.HEIGHT));
 		this.setMinimumSize(new Dimension(Window.WIDTH, Window.HEIGHT));
@@ -118,7 +131,7 @@ public class Stage extends Canvas implements Runnable, InputSensible {
 	
 	public void tick() {
 		for(GameObject gameObject: this.gameObjects) {
-			gameObject.tick(this.gameObjects);
+			gameObject.tick(this.gameObjects, this.gravity, this.maxFallingSpeed);
 		}
 	}
 	

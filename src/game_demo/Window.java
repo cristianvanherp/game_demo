@@ -1,6 +1,7 @@
 package game_demo;
 
 import java.awt.Canvas;
+import java.awt.Point;
 
 import javax.swing.JFrame;
 
@@ -15,8 +16,9 @@ public class Window extends JFrame {
 		this.title = title;
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setResizable(false);
-		this.setLocationRelativeTo(null);
+		this.setLocation(new Point(0, 0));
 		this.setVisible(true);
+		this.requestFocus();
 	}
 	
 	public void changeCanvas(Canvas newCanvas) {

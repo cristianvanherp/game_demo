@@ -21,7 +21,7 @@ public class Block extends GameObject {
 	}
 	
 	//Game Object methods
-	public void tick(List<GameObject> gameObjects) {
+	public void tick(List<GameObject> gameObjects, int gravity, int maxFallSpeed) {
 		this.setX(this.x + this.getVelx());
 		this.setY(this.y + this.getVely());
 		this.handleCollision(gameObjects);

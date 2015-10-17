@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Game {
 	public static double FPS = 60;
-	public static double TPS = 100;
+	public static double TPS = 65;
 	public static double APS = 7;
 	
 	public List<Stage> stages;
