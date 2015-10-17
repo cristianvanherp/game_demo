@@ -12,9 +12,11 @@ public abstract class GameObject extends Bound {
 	private static int centerBoundHeightRate = 50;
 	private static int centerBoundWidthRate = 60;
 	private int velx, vely, speed;
+	private String spriteSheetPath;
+	private transient SpriteSheet spriteSheet;
 	private boolean falling;
 	
-	public GameObject(int width, int height, int speed) {
+	public GameObject(int width, int height, int speed, String spriteSheetPath) {
 		this.width = width;
 		this.height = height;
 		this.boundaryLeft = new Bound();
@@ -23,6 +25,8 @@ public abstract class GameObject extends Bound {
 		this.boundaryBottom = new Bound();
 		this.velx = this.vely = 0;
 		this.speed = speed;
+		this.spriteSheetPath = spriteSheetPath;
+		this.spriteSheet = new SpriteSheet(this.spriteSheetPath);
 		this.falling = false;
 		this.x = this.y = 0;
 
@@ -36,7 +40,7 @@ public abstract class GameObject extends Bound {
 		this.adjustBoundaries();
 	}
 	
-	public GameObject(int width, int height, int x, int y, int speed) {
+	public GameObject(int width, int height, int x, int y, int speed, String spriteSheetPath) {
 		this.width = width;
 		this.height = height;
 		this.boundaryLeft = new Bound();
@@ -45,6 +49,8 @@ public abstract class GameObject extends Bound {
 		this.boundaryBottom = new Bound();
 		this.velx = this.vely = 0;
 		this.speed = speed;
+		this.spriteSheetPath = spriteSheetPath;
+		this.spriteSheet = new SpriteSheet(this.spriteSheetPath);
 		this.x = x;
 		this.y = y;
 		
@@ -115,6 +121,22 @@ public abstract class GameObject extends Bound {
 
 	public void setFalling(boolean falling) {
 		this.falling = falling;
+	}
+
+	public String getSpriteSheetPath() {
+		return spriteSheetPath;
+	}
+
+	public void setSpriteSheetPath(String spriteSheetPath) {
+		this.spriteSheetPath = spriteSheetPath;
+	}
+
+	public SpriteSheet getSpriteSheet() {
+		return spriteSheet;
+	}
+
+	public void setSpriteSheet(SpriteSheet spriteSheet) {
+		this.spriteSheet = spriteSheet;
 	}
 
 	public Bound getBoundaryLeft() {

@@ -24,25 +24,25 @@ public class Stage extends Canvas implements Runnable, InputSensible {
 		this.APS = APS;
 		this.gravity = gravity;
 		this.maxFallingSpeed = maxFallingSpeed;
-		this.entity = new Entity(40, 40, 100, 100, 3, 17);
+		this.entity = new Entity(32, 32, 100, 100, 3, 17, "/spritesheet_1_player.png");
 		this.gameObjects = new ArrayList<GameObject>();
 		this.gameObjects.add(this.entity);
 		
-		this.gameObjects.add(new Block(40, 40, 182, 277, 5));
-		this.gameObjects.add(new Block(40, 40, 141, 277, 5));
-		this.gameObjects.add(new Block(40, 40, 100, 277, 5));
-		this.gameObjects.add(new Block(40, 40, 100, 318, 5));
-		this.gameObjects.add(new Block(40, 40, 100, 359, 5));
-		this.gameObjects.add(new Block(40, 40, 100, 400, 5));
-		this.gameObjects.add(new Block(40, 40, 141, 400, 5));
-		this.gameObjects.add(new Block(40, 40, 182, 400, 5));
-		this.gameObjects.add(new Block(40, 40, 223, 400, 5));
-		this.gameObjects.add(new Block(40, 40, 264, 400, 5));
-		this.gameObjects.add(new Block(40, 40, 305, 400, 5));
-		this.gameObjects.add(new Block(40, 40, 346, 400, 5));
-		this.gameObjects.add(new Block(40, 40, 387, 400, 5));
-		this.gameObjects.add(new Block(40, 40, 428, 400, 5));
-		this.gameObjects.add(new Block(40, 40, 469, 400, 5));
+		this.gameObjects.add(new Block(40, 40, 182, 277, 5, "/block_grass_1.png"));
+		this.gameObjects.add(new Block(40, 40, 141, 277, 5, "/block_grass_1.png"));
+		this.gameObjects.add(new Block(40, 40, 100, 277, 5, "/block_grass_1.png"));
+		this.gameObjects.add(new Block(40, 40, 100, 318, 5, "/block_grass_1.png"));
+		this.gameObjects.add(new Block(40, 40, 100, 359, 5, "/block_grass_1.png"));
+		this.gameObjects.add(new Block(40, 40, 100, 400, 5, "/block_grass_1.png"));
+		this.gameObjects.add(new Block(40, 40, 141, 400, 5, "/block_grass_1.png"));
+		this.gameObjects.add(new Block(40, 40, 182, 400, 5, "/block_grass_1.png"));
+		this.gameObjects.add(new Block(40, 40, 223, 400, 5, "/block_grass_1.png"));
+		this.gameObjects.add(new Block(40, 40, 264, 400, 5, "/block_grass_1.png"));
+		this.gameObjects.add(new Block(40, 40, 305, 400, 5, "/block_grass_1.png"));
+		this.gameObjects.add(new Block(40, 40, 346, 400, 5, "/block_grass_1.png"));
+		this.gameObjects.add(new Block(40, 40, 387, 400, 5, "/block_grass_1.png"));
+		this.gameObjects.add(new Block(40, 40, 428, 400, 5, "/block_grass_1.png"));
+		this.gameObjects.add(new Block(40, 40, 469, 400, 5, "/block_grass_1.png"));
 		
 		this.setPreferredSize(new Dimension(Window.WIDTH, Window.HEIGHT));
 		this.setMinimumSize(new Dimension(Window.WIDTH, Window.HEIGHT));
@@ -52,6 +52,7 @@ public class Stage extends Canvas implements Runnable, InputSensible {
 	public void init() {
 		this.keyboardInputListener = new KeyboardInputListener(this);
 		this.addKeyListener(this.keyboardInputListener);
+		this.requestFocus();
 	}
 	
 	public void start() {
@@ -122,7 +123,7 @@ public class Stage extends Canvas implements Runnable, InputSensible {
 		g.setColor(new Color(0, 0, 0));
 		g.fillRect(0, 0, Window.WIDTH, Window.HEIGHT);
 		for(GameObject gameObject: this.gameObjects) {
-			gameObject.renderBoundaries(g, this);
+			gameObject.render(g, this);
 		}
 		
 		g.dispose();
@@ -136,7 +137,9 @@ public class Stage extends Canvas implements Runnable, InputSensible {
 	}
 	
 	public void animate() {
-		
+		for(GameObject gameObject: this.gameObjects) {
+			gameObject.animate();
+		}
 	}
 	
 	public void keyEvent() {

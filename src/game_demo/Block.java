@@ -12,12 +12,12 @@ public class Block extends GameObject {
 	private static int centerBoundHeightRate = 50;
 	private static int centerBoundWidthRate = 60;
 	
-	public Block(int width, int height, int speed) {
-		super(width, height, speed);
+	public Block(int width, int height, int speed, String spriteSheetPath) {
+		super(width, height, speed, spriteSheetPath);
 	}
 	
-	public Block(int width, int height, int x, int y, int speed) {
-		super(width, height, x, y, speed);
+	public Block(int width, int height, int x, int y, int speed, String spriteSheetPath) {
+		super(width, height, x, y, speed, spriteSheetPath);
 	}
 	
 	//Game Object methods
@@ -32,7 +32,7 @@ public class Block extends GameObject {
 	}
 	
 	public void render(Graphics g, Canvas canvas) {
-		
+		g.drawImage(this.getSpriteSheet().slice(0, 0, 40, 40), (int)this.getX(), (int)this.getY(), canvas);
 	}
 	
 	public void keyEvent(KeyboardInputListener keyboardInputListener) {
