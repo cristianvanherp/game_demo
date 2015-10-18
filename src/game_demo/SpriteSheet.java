@@ -20,4 +20,8 @@ public class SpriteSheet {
 	public BufferedImage slice(int col, int row, int width, int height) {
 		return this.image.getSubimage(col*width, row*height, width, height);
 	}
+	
+	public BufferedImage getImage() {
+		return this.image;
+	}
 }

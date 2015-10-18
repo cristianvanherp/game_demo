@@ -123,7 +123,7 @@ public class Stage extends Canvas implements Runnable, InputSensible {
 		g.setColor(new Color(0, 0, 0));
 		g.fillRect(0, 0, Window.WIDTH, Window.HEIGHT);
 		for(GameObject gameObject: this.gameObjects) {
-			gameObject.render(g, this);
+			gameObject.renderBoundaries(g, this);
 		}
 		
 		g.dispose();

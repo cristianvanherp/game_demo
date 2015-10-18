@@ -14,6 +14,7 @@ public abstract class GameObject extends Bound {
 	private int velx, vely, speed;
 	private String spriteSheetPath;
 	private transient SpriteSheet spriteSheet;
+	private int currentSpriteRow, currentSpriteCol;
 	private boolean falling;
 	
 	public GameObject(int width, int height, int speed, String spriteSheetPath) {
@@ -27,6 +28,7 @@ public abstract class GameObject extends Bound {
 		this.speed = speed;
 		this.spriteSheetPath = spriteSheetPath;
 		this.spriteSheet = new SpriteSheet(this.spriteSheetPath);
+		this.currentSpriteRow = this.currentSpriteCol = 2;
 		this.falling = false;
 		this.x = this.y = 0;
 
@@ -51,6 +53,7 @@ public abstract class GameObject extends Bound {
 		this.speed = speed;
 		this.spriteSheetPath = spriteSheetPath;
 		this.spriteSheet = new SpriteSheet(this.spriteSheetPath);
+		this.currentSpriteRow = this.currentSpriteCol = 2;
 		this.x = x;
 		this.y = y;
 		
@@ -137,6 +140,22 @@ public abstract class GameObject extends Bound {
 
 	public void setSpriteSheet(SpriteSheet spriteSheet) {
 		this.spriteSheet = spriteSheet;
+	}
+
+	public int getCurrentSpriteRow() {
+		return currentSpriteRow;
+	}
+
+	public void setCurrentSpriteRow(int currentSpriteRow) {
+		this.currentSpriteRow = currentSpriteRow;
+	}
+
+	public int getCurrentSpriteCol() {
+		return currentSpriteCol;
+	}
+
+	public void setCurrentSpriteCol(int currentSpriteCol) {
+		this.currentSpriteCol = currentSpriteCol;
 	}
 
 	public Bound getBoundaryLeft() {

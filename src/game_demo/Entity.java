@@ -8,20 +8,17 @@ import java.util.List;
 public class Entity extends GameObject {
 	private int jumpSpeed;
 	private boolean canJump;
-	private int currentSpriteRow, currentSpriteCol;
 	
 	public Entity(int width, int height, int speed, int jumpSpeed, String spriteSheetPath) {
 		super(width, height, speed, spriteSheetPath);
 		this.jumpSpeed = jumpSpeed;
 		this.canJump = false;
-		this.currentSpriteRow = this.currentSpriteCol = 2;
 	}
 	
 	public Entity(int width, int height, int x, int y, int speed, int jumpSpeed, String spriteSheetPath) {
 		super(width, height, x, y, speed, spriteSheetPath);
 		this.jumpSpeed = jumpSpeed;
 		this.canJump = false;
-		this.currentSpriteRow = this.currentSpriteCol = 2;
 	}
 	
 	//Game Object methods
@@ -36,16 +33,16 @@ public class Entity extends GameObject {
 
 	public void animate() {
 		if(this.getVelx() != 0) {
-			if(this.currentSpriteCol < 2)
-				this.currentSpriteCol++;
+			if(this.getCurrentSpriteCol() < 2)
+				this.setCurrentSpriteCol(this.getCurrentSpriteCol() + 1);
 			else {
-				this.currentSpriteCol = 0;
+				this.setCurrentSpriteCol(0);
 			}
 		}
 	}
 	
 	public void render(Graphics g, Canvas canvas) {
-		g.drawImage(this.getSpriteSheet().slice(this.currentSpriteCol, this.currentSpriteRow, this.width, this.height), (int)this.getX(), (int)this.getY(), canvas);	
+		g.drawImage(this.getSpriteSheet().slice(this.getCurrentSpriteCol(), this.getCurrentSpriteRow(), this.width, this.height), (int)this.getX(), (int)this.getY(), canvas);	
 	}
 	
 	public void keyEvent(KeyboardInputListener keyboardInputListener) {
@@ -73,22 +70,6 @@ public class Entity extends GameObject {
 	
 	public void setCanJump(boolean canJump) {
 		this.canJump = canJump;
-	}
-	
-	public int getCurrentSpriteRow() {
-		return currentSpriteRow;
-	}
-
-	public void setCurrentSpriteRow(int currentSpriteRow) {
-		this.currentSpriteRow = currentSpriteRow;
-	}
-	
-	public int getCurrentSpriteCol() {
-		return currentSpriteCol;
-	}
-
-	public void setCurrentSpriteCol(int currentSpriteCol) {
-		this.currentSpriteCol = currentSpriteCol;
 	}
 	
 	//Utility methods
