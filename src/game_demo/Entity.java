@@ -6,19 +6,12 @@ import java.awt.event.KeyEvent;
 import java.util.List;
 
 public class Entity extends GameObject {
-	private int jumpSpeed;
-	private boolean canJump;
-	
-	public Entity(int width, int height, int speed, int jumpSpeed, String spriteSheetPath) {
-		super(width, height, speed, spriteSheetPath);
-		this.jumpSpeed = jumpSpeed;
-		this.canJump = false;
+	public Entity(int width, int height, int speed, String spriteSheetPath, boolean affectedByGravity, int jumpSpeed) {
+		super(width, height, speed, spriteSheetPath, affectedByGravity, jumpSpeed);
 	}
 	
-	public Entity(int width, int height, int x, int y, int speed, int jumpSpeed, String spriteSheetPath) {
-		super(width, height, x, y, speed, spriteSheetPath);
-		this.jumpSpeed = jumpSpeed;
-		this.canJump = false;
+	public Entity(int width, int height, int x, int y, int speed, String spriteSheetPath, boolean affectedByGravity, int jumpSpeed) {
+		super(width, height, x, y, speed, spriteSheetPath, affectedByGravity, jumpSpeed);
 	}
 	
 	//Game Object methods
@@ -63,23 +56,7 @@ public class Entity extends GameObject {
 		}
 	}
 	
-	//Getters and Setters
-	public boolean canJump() {
-		return this.canJump;
-	}
-	
-	public void setCanJump(boolean canJump) {
-		this.canJump = canJump;
-	}
-	
 	//Utility methods
-	public void jump() {
-		if(this.canJump()) {
-			this.setCanJump(false);
-			this.setVely(-this.jumpSpeed);
-		}
-	}
-	
 	private void handleCollision(List<GameObject> gameObjects) {
 		for(GameObject gameObject: gameObjects) {
 			if(this.isTopColliding(gameObject) && gameObject != this) {
@@ -91,7 +68,6 @@ public class Entity extends GameObject {
 				this.setY((int)gameObject.getMinY() - 1 - this.height);
 				this.setVely(0);
 				this.setFalling(false);
-				this.setCanJump(true);
 			}
 			else {
 				this.setFalling(true);

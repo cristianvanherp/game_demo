@@ -16,8 +16,11 @@ public abstract class GameObject extends Bound {
 	private transient SpriteSheet spriteSheet;
 	private int currentSpriteRow, currentSpriteCol;
 	private boolean falling;
+	private int jumpSpeed;
+	private boolean canJump;
+	private boolean affectedByGravity;
 	
-	public GameObject(int width, int height, int speed, String spriteSheetPath) {
+	public GameObject(int width, int height, int speed, String spriteSheetPath, boolean affectedByGravity, int jumpSpeed) {
 		this.width = width;
 		this.height = height;
 		this.boundaryLeft = new Bound();
@@ -30,7 +33,10 @@ public abstract class GameObject extends Bound {
 		this.spriteSheet = new SpriteSheet(this.spriteSheetPath);
 		this.currentSpriteRow = this.currentSpriteCol = 2;
 		this.falling = false;
+		this.jumpSpeed = jumpSpeed;
+		this.canJump = false;
 		this.x = this.y = 0;
+		this.affectedByGravity = affectedByGravity;
 
 		try {
 			this.validateDimensions();
@@ -42,7 +48,7 @@ public abstract class GameObject extends Bound {
 		this.adjustBoundaries();
 	}
 	
-	public GameObject(int width, int height, int x, int y, int speed, String spriteSheetPath) {
+	public GameObject(int width, int height, int x, int y, int speed, String spriteSheetPath, boolean affectedByGravity, int jumpSpeed) {
 		this.width = width;
 		this.height = height;
 		this.boundaryLeft = new Bound();
@@ -54,8 +60,14 @@ public abstract class GameObject extends Bound {
 		this.spriteSheetPath = spriteSheetPath;
 		this.spriteSheet = new SpriteSheet(this.spriteSheetPath);
 		this.currentSpriteRow = this.currentSpriteCol = 2;
+		this.falling = false;
+		this.jumpSpeed = jumpSpeed;
+		this.canJump = false;
 		this.x = x;
 		this.y = y;
+		this.affectedByGravity = affectedByGravity;
+
+
 		
 		try {
 			this.validateDimensions();
@@ -123,6 +135,9 @@ public abstract class GameObject extends Bound {
 	}
 
 	public void setFalling(boolean falling) {
+		if(!falling)
+			this.setCanJump(true);
+		
 		this.falling = falling;
 	}
 
@@ -156,6 +171,22 @@ public abstract class GameObject extends Bound {
 
 	public void setCurrentSpriteCol(int currentSpriteCol) {
 		this.currentSpriteCol = currentSpriteCol;
+	}
+	
+	public boolean isAffectedByGravity() {
+		return affectedByGravity;
+	}
+
+	public void setAffectedByGravity(boolean affectedByGravity) {
+		this.affectedByGravity = affectedByGravity;
+	}
+
+	public boolean canJump() {
+		return this.canJump;
+	}
+	
+	public void setCanJump(boolean canJump) {
+		this.canJump = canJump;
 	}
 
 	public Bound getBoundaryLeft() {
@@ -232,6 +263,13 @@ public abstract class GameObject extends Bound {
 		if(this.getBoundaryRight().collides(gameObject))
 			return true;
 		return false;
+	}
+	
+	public void jump() {
+		if(this.canJump()) {
+			this.setCanJump(false);
+			this.setVely(-this.jumpSpeed);
+		}
 	}
 	
 	//Validation methods

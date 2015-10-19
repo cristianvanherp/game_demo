@@ -12,16 +12,23 @@ public class Block extends GameObject {
 	private static int centerBoundHeightRate = 50;
 	private static int centerBoundWidthRate = 60;
 	
-	public Block(int width, int height, int speed, String spriteSheetPath) {
-		super(width, height, speed, spriteSheetPath);
+	public Block(int width, int height, int speed, String spriteSheetPath, boolean affectedByGravity) {
+		super(width, height, speed, spriteSheetPath, affectedByGravity, 5);
 	}
 	
-	public Block(int width, int height, int x, int y, int speed, String spriteSheetPath) {
-		super(width, height, x, y, speed, spriteSheetPath);
+	public Block(int width, int height, int x, int y, int speed, String spriteSheetPath, boolean affectedByGravity) {
+		super(width, height, x, y, speed, spriteSheetPath, affectedByGravity, 5);
+	}
+	
+	public Block(int width, int height, int x, int y, int speed, String spriteSheetPath, boolean affectedByGravity, int jumpSpeed) {
+		super(width, height, x, y, speed, spriteSheetPath, affectedByGravity, jumpSpeed);
 	}
 	
 	//Game Object methods
 	public void tick(List<GameObject> gameObjects, int gravity, int maxFallSpeed) {
+		if(this.isFalling() && this.getVely() <= maxFallSpeed)
+			this.setVely(this.getVely() + gravity);
+		
 		this.setX(this.x + this.getVelx());
 		this.setY(this.y + this.getVely());
 		this.handleCollision(gameObjects);
@@ -38,9 +45,22 @@ public class Block extends GameObject {
 	public void keyEvent(KeyboardInputListener keyboardInputListener) {
 		
 	}
-
+	
 	public void handleCollision(List<GameObject> gameObjects) {
-		
+		for(GameObject gameObject: gameObjects) {
+			if(this.isBottomColliding(gameObject) && gameObject != this) {
+				this.setY((int)gameObject.getMinY() - 1 - this.height);
+				this.setVely(0);
+				if(this.isAffectedByGravity()) {
+					this.setFalling(false);
+					this.jump();
+				}
+			}
+			else {
+				if(this.isAffectedByGravity())
+					this.setFalling(true);
+			}
+		}
 	}
 	
 }
