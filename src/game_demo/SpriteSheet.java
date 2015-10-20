@@ -6,13 +6,15 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class SpriteSheet {
-	private BufferedImage image;
+	private String imagePath;
+	private transient BufferedImage image;
 	private int numRows, numCols;
 	private int currentRow, currentCol;
 	private int spriteWidth, spriteHeight;
 	private int rowLeft, rowRight, rowTop, rowBottom;
 	
 	public SpriteSheet(String imagePath, int numRows, int numCols, int spriteWidth, int spriteHeight, int rowLeft, int rowRight, int rowTop, int rowBottom) {
+		this.imagePath = imagePath;
 		this.numRows = numRows;
 		this.numCols = numCols;
 		this.currentRow = this.currentCol = 0;
@@ -24,7 +26,7 @@ public class SpriteSheet {
 		this.rowBottom = rowBottom;
 		
 		try {
-			this.image = ImageIO.read(getClass().getResource(imagePath));
+			this.image = ImageIO.read(getClass().getResource(this.imagePath));
 		}
 		catch (IOException e) {
 			e.printStackTrace();
@@ -46,7 +48,18 @@ public class SpriteSheet {
 			this.setCurrentCol(0);
 		}
 	}
-
+	
+	//Utility methods
+	public void reload() {
+		try {
+			this.image = ImageIO.read(getClass().getResource(this.imagePath));
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	//	Getters and Setters
 	public int getNumRows() {
 		return numRows;
 	}

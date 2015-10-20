@@ -12,8 +12,7 @@ public abstract class GameObject extends Bound {
 	private static int centerBoundHeightRate = 50;
 	private static int centerBoundWidthRate = 60;
 	private int velx, vely, speed;
-	private String spriteSheetPath;
-	private transient SpriteSheet spriteSheet;
+	private SpriteSheet spriteSheet;
 	private boolean falling;
 	private int jumpSpeed;
 	private boolean canJump;
@@ -28,8 +27,6 @@ public abstract class GameObject extends Bound {
 		this.boundaryBottom = new Bound();
 		this.velx = this.vely = 0;
 		this.speed = speed;
-		this.spriteSheetPath = spriteSheetPath;
-//		, String spriteSheetPath, int spriteWidth, int spriteHeight, int numSpriteSheetRows, int numSpriteSheetCols
 		this.spriteSheet = spriteSheet;
 		this.falling = false;
 		this.jumpSpeed = jumpSpeed;
@@ -110,14 +107,6 @@ public abstract class GameObject extends Bound {
 			this.setCanJump(true);
 		
 		this.falling = falling;
-	}
-
-	public String getSpriteSheetPath() {
-		return spriteSheetPath;
-	}
-
-	public void setSpriteSheetPath(String spriteSheetPath) {
-		this.spriteSheetPath = spriteSheetPath;
 	}
 
 	public SpriteSheet getSpriteSheet() {
