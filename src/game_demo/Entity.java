@@ -7,8 +7,8 @@ import java.util.List;
 
 public class Entity extends GameObject {
 	
-	public Entity(int width, int height, int x, int y, int speed, String spriteSheetPath, int spriteWidth, int spriteHeight, int numSpriteSheetRows, int numSpriteSheetCols, boolean affectedByGravity, int jumpSpeed) {
-		super(width, height, x, y, speed, spriteSheetPath, spriteWidth, spriteHeight, numSpriteSheetRows, numSpriteSheetCols, affectedByGravity, jumpSpeed);
+	public Entity(int width, int height, int x, int y, int speed, SpriteSheet spriteSheet, boolean affectedByGravity, int jumpSpeed) {
+		super(width, height, x, y, speed, spriteSheet, affectedByGravity, jumpSpeed);
 	}
 	
 	//Game Object methods
@@ -25,14 +25,23 @@ public class Entity extends GameObject {
 		g.drawImage(this.getSpriteSheet().slice(this.getSpriteSheet().getCurrentCol(), this.getSpriteSheet().getCurrentRow(), this.getSpriteSheet().getSpriteWidth(), this.getSpriteSheet().getSpriteHeight()), (int)this.getX(), (int)this.getY(), (int)this.getWidth() + 1, (int)this.getHeight()+1, canvas);	
 	}
 	
+	public void animate() {
+		if(this.getVelx() != 0) {
+			this.getSpriteSheet().animate();
+		}
+		else {
+			this.getSpriteSheet().setCurrentCol(1);
+		}
+	}
+	
 	public void keyEvent(KeyboardInputListener keyboardInputListener) {
 		if(keyboardInputListener.isKeyDown(KeyEvent.VK_LEFT)) {
 			this.setVelx(-this.getSpeed());
-			this.getSpriteSheet().setCurrentRow(1);
+			this.getSpriteSheet().setCurrentRow(this.getSpriteSheet().getRowLeft());
 		}
 		else if(keyboardInputListener.isKeyDown(KeyEvent.VK_RIGHT)) {
 			this.setVelx(this.getSpeed());
-			this.getSpriteSheet().setCurrentRow(2);
+			this.getSpriteSheet().setCurrentRow(this.getSpriteSheet().getRowRight());
 		}
 		else {
 			this.setVelx(0);

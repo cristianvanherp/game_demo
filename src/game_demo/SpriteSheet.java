@@ -10,13 +10,19 @@ public class SpriteSheet {
 	private int numRows, numCols;
 	private int currentRow, currentCol;
 	private int spriteWidth, spriteHeight;
+	private int rowLeft, rowRight, rowTop, rowBottom;
 	
-	public SpriteSheet(String imagePath, int numRows, int numCols, int spriteWidth, int spriteHeight) {
+	public SpriteSheet(String imagePath, int numRows, int numCols, int spriteWidth, int spriteHeight, int rowLeft, int rowRight, int rowTop, int rowBottom) {
 		this.numRows = numRows;
 		this.numCols = numCols;
 		this.currentRow = this.currentCol = 0;
 		this.spriteWidth = spriteWidth;
 		this.spriteHeight = spriteHeight;
+		this.rowLeft = rowLeft;
+		this.rowRight = rowRight;
+		this.rowTop = rowTop;
+		this.rowBottom = rowBottom;
+		
 		try {
 			this.image = ImageIO.read(getClass().getResource(imagePath));
 		}
@@ -87,6 +93,42 @@ public class SpriteSheet {
 
 	public void setSpriteHeight(int spriteHeight) {
 		this.spriteHeight = spriteHeight;
+	}
+
+	public int getRowLeft() {
+		return rowLeft;
+	}
+
+	public void setRowLeft(int rowLeft) {
+		this.rowLeft = rowLeft;
+	}
+
+	public int getRowRight() {
+		return rowRight;
+	}
+
+	public void setRowRight(int rowRight) {
+		this.rowRight = rowRight;
+	}
+
+	public int getRowTop() {
+		return rowTop;
+	}
+
+	public void setRowTop(int rowTop) {
+		this.rowTop = rowTop;
+	}
+
+	public int getRowBottom() {
+		return rowBottom;
+	}
+
+	public void setRowBottom(int rowBottom) {
+		this.rowBottom = rowBottom;
+	}
+
+	public void setImage(BufferedImage image) {
+		this.image = image;
 	}
 	
 }

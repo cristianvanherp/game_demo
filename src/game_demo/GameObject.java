@@ -19,7 +19,7 @@ public abstract class GameObject extends Bound {
 	private boolean canJump;
 	private boolean affectedByGravity;
 	
-	public GameObject(int width, int height, int x, int y, int speed, String spriteSheetPath, int spriteWidth, int spriteHeight, int numSpriteSheetRows, int numSpriteSheetCols, boolean affectedByGravity, int jumpSpeed) {
+	public GameObject(int width, int height, int x, int y, int speed, SpriteSheet spriteSheet, boolean affectedByGravity, int jumpSpeed) {
 		this.width = width;
 		this.height = height;
 		this.boundaryLeft = new Bound();
@@ -29,7 +29,8 @@ public abstract class GameObject extends Bound {
 		this.velx = this.vely = 0;
 		this.speed = speed;
 		this.spriteSheetPath = spriteSheetPath;
-		this.spriteSheet = new SpriteSheet(this.spriteSheetPath, numSpriteSheetRows, numSpriteSheetCols, spriteWidth, spriteHeight);
+//		, String spriteSheetPath, int spriteWidth, int spriteHeight, int numSpriteSheetRows, int numSpriteSheetCols
+		this.spriteSheet = spriteSheet;
 		this.falling = false;
 		this.jumpSpeed = jumpSpeed;
 		this.canJump = false;
@@ -51,13 +52,8 @@ public abstract class GameObject extends Bound {
 	
 	public abstract void tick(List<GameObject> gameObjects, int gravity, int maxFallSpeed);
 	public abstract void render(Graphics g, Canvas canvas);
+	public abstract void animate();
 	public abstract void keyEvent(KeyboardInputListener keyboardInputListener);
-	
-	public void animate() {
-		if(this.getVelx() != 0) {
-			this.spriteSheet.animate();
-		}
-	}
 	
 	public void renderBoundaries(Graphics g, Canvas canvas) {
 		g.setColor(new Color(255, 255, 255));
