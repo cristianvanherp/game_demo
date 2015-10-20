@@ -19,7 +19,7 @@ public abstract class GameObject extends Bound {
 	private boolean canJump;
 	private boolean affectedByGravity;
 	
-	public GameObject(int width, int height, int x, int y, int speed, String spriteSheetPath, int numSpriteSheetRows, int numSpriteSheetCols, boolean affectedByGravity, int jumpSpeed) {
+	public GameObject(int width, int height, int x, int y, int speed, String spriteSheetPath, int spriteWidth, int spriteHeight, int numSpriteSheetRows, int numSpriteSheetCols, boolean affectedByGravity, int jumpSpeed) {
 		this.width = width;
 		this.height = height;
 		this.boundaryLeft = new Bound();
@@ -29,7 +29,7 @@ public abstract class GameObject extends Bound {
 		this.velx = this.vely = 0;
 		this.speed = speed;
 		this.spriteSheetPath = spriteSheetPath;
-		this.spriteSheet = new SpriteSheet(this.spriteSheetPath, numSpriteSheetRows, numSpriteSheetCols);
+		this.spriteSheet = new SpriteSheet(this.spriteSheetPath, numSpriteSheetRows, numSpriteSheetCols, spriteWidth, spriteHeight);
 		this.falling = false;
 		this.jumpSpeed = jumpSpeed;
 		this.canJump = false;

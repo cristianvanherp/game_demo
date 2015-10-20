@@ -9,11 +9,14 @@ public class SpriteSheet {
 	private BufferedImage image;
 	private int numRows, numCols;
 	private int currentRow, currentCol;
+	private int spriteWidth, spriteHeight;
 	
-	public SpriteSheet(String imagePath, int numRows, int numCols) {
+	public SpriteSheet(String imagePath, int numRows, int numCols, int spriteWidth, int spriteHeight) {
 		this.numRows = numRows;
 		this.numCols = numCols;
 		this.currentRow = this.currentCol = 0;
+		this.spriteWidth = spriteWidth;
+		this.spriteHeight = spriteHeight;
 		try {
 			this.image = ImageIO.read(getClass().getResource(imagePath));
 		}
@@ -68,6 +71,22 @@ public class SpriteSheet {
 
 	public void setCurrentCol(int currentCol) {
 		this.currentCol = currentCol;
+	}
+
+	public int getSpriteWidth() {
+		return spriteWidth;
+	}
+
+	public void setSpriteWidth(int spriteWidth) {
+		this.spriteWidth = spriteWidth;
+	}
+
+	public int getSpriteHeight() {
+		return spriteHeight;
+	}
+
+	public void setSpriteHeight(int spriteHeight) {
+		this.spriteHeight = spriteHeight;
 	}
 	
 }

@@ -7,8 +7,8 @@ import java.util.List;
 
 public class Entity extends GameObject {
 	
-	public Entity(int width, int height, int x, int y, int speed, String spriteSheetPath, int numSpriteSheetRows, int numSpriteSheetCols, boolean affectedByGravity, int jumpSpeed) {
-		super(width, height, x, y, speed, spriteSheetPath, numSpriteSheetRows, numSpriteSheetCols, affectedByGravity, jumpSpeed);
+	public Entity(int width, int height, int x, int y, int speed, String spriteSheetPath, int spriteWidth, int spriteHeight, int numSpriteSheetRows, int numSpriteSheetCols, boolean affectedByGravity, int jumpSpeed) {
+		super(width, height, x, y, speed, spriteSheetPath, spriteWidth, spriteHeight, numSpriteSheetRows, numSpriteSheetCols, affectedByGravity, jumpSpeed);
 	}
 	
 	//Game Object methods
@@ -22,7 +22,7 @@ public class Entity extends GameObject {
 	}
 	
 	public void render(Graphics g, Canvas canvas) {
-		g.drawImage(this.getSpriteSheet().slice(this.getSpriteSheet().getCurrentCol(), this.getSpriteSheet().getCurrentRow(), this.width, this.height), (int)this.getX(), (int)this.getY(), canvas);	
+		g.drawImage(this.getSpriteSheet().slice(this.getSpriteSheet().getCurrentCol(), this.getSpriteSheet().getCurrentRow(), this.getSpriteSheet().getSpriteWidth(), this.getSpriteSheet().getSpriteHeight()), (int)this.getX(), (int)this.getY(), (int)this.getWidth() + 1, (int)this.getHeight()+1, canvas);	
 	}
 	
 	public void keyEvent(KeyboardInputListener keyboardInputListener) {
