@@ -6,22 +6,9 @@ import java.awt.Rectangle;
 import java.util.List;
 
 public class Block extends GameObject {
-	private Rectangle boundaryLeft, boundaryRight, boundaryTop, boundaryBottom;
-	private static int sideBoundHeightRate = 75;
-	private static int sideBoundWidthRate = 15;
-	private static int centerBoundHeightRate = 50;
-	private static int centerBoundWidthRate = 60;
 	
-	public Block(int width, int height, int speed, String spriteSheetPath, boolean affectedByGravity) {
-		super(width, height, speed, spriteSheetPath, affectedByGravity, 5);
-	}
-	
-	public Block(int width, int height, int x, int y, int speed, String spriteSheetPath, boolean affectedByGravity) {
-		super(width, height, x, y, speed, spriteSheetPath, affectedByGravity, 5);
-	}
-	
-	public Block(int width, int height, int x, int y, int speed, String spriteSheetPath, boolean affectedByGravity, int jumpSpeed) {
-		super(width, height, x, y, speed, spriteSheetPath, affectedByGravity, jumpSpeed);
+	public Block(int width, int height, int x, int y, int speed, String spriteSheetPath, int numSpriteSheetRows, int numSpriteSheetCols, boolean affectedByGravity, int jumpSpeed) {
+		super(width, height, x, y, speed, spriteSheetPath, numSpriteSheetRows, numSpriteSheetCols, affectedByGravity, jumpSpeed);
 	}
 	
 	//Game Object methods
@@ -32,10 +19,6 @@ public class Block extends GameObject {
 		this.setX(this.x + this.getVelx());
 		this.setY(this.y + this.getVely());
 		this.handleCollision(gameObjects);
-	}
-
-	public void animate() {
-		
 	}
 	
 	public void render(Graphics g, Canvas canvas) {

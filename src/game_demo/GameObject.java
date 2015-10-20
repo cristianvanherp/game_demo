@@ -14,13 +14,12 @@ public abstract class GameObject extends Bound {
 	private int velx, vely, speed;
 	private String spriteSheetPath;
 	private transient SpriteSheet spriteSheet;
-	private int currentSpriteRow, currentSpriteCol;
 	private boolean falling;
 	private int jumpSpeed;
 	private boolean canJump;
 	private boolean affectedByGravity;
 	
-	public GameObject(int width, int height, int speed, String spriteSheetPath, boolean affectedByGravity, int jumpSpeed) {
+	public GameObject(int width, int height, int x, int y, int speed, String spriteSheetPath, int numSpriteSheetRows, int numSpriteSheetCols, boolean affectedByGravity, int jumpSpeed) {
 		this.width = width;
 		this.height = height;
 		this.boundaryLeft = new Bound();
@@ -30,36 +29,7 @@ public abstract class GameObject extends Bound {
 		this.velx = this.vely = 0;
 		this.speed = speed;
 		this.spriteSheetPath = spriteSheetPath;
-		this.spriteSheet = new SpriteSheet(this.spriteSheetPath);
-		this.currentSpriteRow = this.currentSpriteCol = 2;
-		this.falling = false;
-		this.jumpSpeed = jumpSpeed;
-		this.canJump = false;
-		this.x = this.y = 0;
-		this.affectedByGravity = affectedByGravity;
-
-		try {
-			this.validateDimensions();
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		this.adjustBoundaries();
-	}
-	
-	public GameObject(int width, int height, int x, int y, int speed, String spriteSheetPath, boolean affectedByGravity, int jumpSpeed) {
-		this.width = width;
-		this.height = height;
-		this.boundaryLeft = new Bound();
-		this.boundaryRight = new Bound();
-		this.boundaryTop = new Bound();
-		this.boundaryBottom = new Bound();
-		this.velx = this.vely = 0;
-		this.speed = speed;
-		this.spriteSheetPath = spriteSheetPath;
-		this.spriteSheet = new SpriteSheet(this.spriteSheetPath);
-		this.currentSpriteRow = this.currentSpriteCol = 2;
+		this.spriteSheet = new SpriteSheet(this.spriteSheetPath, numSpriteSheetRows, numSpriteSheetCols);
 		this.falling = false;
 		this.jumpSpeed = jumpSpeed;
 		this.canJump = false;
@@ -80,9 +50,14 @@ public abstract class GameObject extends Bound {
 	}
 	
 	public abstract void tick(List<GameObject> gameObjects, int gravity, int maxFallSpeed);
-	public abstract void animate();
 	public abstract void render(Graphics g, Canvas canvas);
 	public abstract void keyEvent(KeyboardInputListener keyboardInputListener);
+	
+	public void animate() {
+		if(this.getVelx() != 0) {
+			this.spriteSheet.animate();
+		}
+	}
 	
 	public void renderBoundaries(Graphics g, Canvas canvas) {
 		g.setColor(new Color(255, 255, 255));
@@ -155,22 +130,6 @@ public abstract class GameObject extends Bound {
 
 	public void setSpriteSheet(SpriteSheet spriteSheet) {
 		this.spriteSheet = spriteSheet;
-	}
-
-	public int getCurrentSpriteRow() {
-		return currentSpriteRow;
-	}
-
-	public void setCurrentSpriteRow(int currentSpriteRow) {
-		this.currentSpriteRow = currentSpriteRow;
-	}
-
-	public int getCurrentSpriteCol() {
-		return currentSpriteCol;
-	}
-
-	public void setCurrentSpriteCol(int currentSpriteCol) {
-		this.currentSpriteCol = currentSpriteCol;
 	}
 	
 	public boolean isAffectedByGravity() {

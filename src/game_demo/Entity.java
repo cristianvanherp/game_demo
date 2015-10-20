@@ -6,12 +6,9 @@ import java.awt.event.KeyEvent;
 import java.util.List;
 
 public class Entity extends GameObject {
-	public Entity(int width, int height, int speed, String spriteSheetPath, boolean affectedByGravity, int jumpSpeed) {
-		super(width, height, speed, spriteSheetPath, affectedByGravity, jumpSpeed);
-	}
 	
-	public Entity(int width, int height, int x, int y, int speed, String spriteSheetPath, boolean affectedByGravity, int jumpSpeed) {
-		super(width, height, x, y, speed, spriteSheetPath, affectedByGravity, jumpSpeed);
+	public Entity(int width, int height, int x, int y, int speed, String spriteSheetPath, int numSpriteSheetRows, int numSpriteSheetCols, boolean affectedByGravity, int jumpSpeed) {
+		super(width, height, x, y, speed, spriteSheetPath, numSpriteSheetRows, numSpriteSheetCols, affectedByGravity, jumpSpeed);
 	}
 	
 	//Game Object methods
@@ -23,29 +20,19 @@ public class Entity extends GameObject {
 		this.setY(this.y + this.getVely());
 		this.handleCollision(gameObjects);
 	}
-
-	public void animate() {
-		if(this.getVelx() != 0) {
-			if(this.getCurrentSpriteCol() < 2)
-				this.setCurrentSpriteCol(this.getCurrentSpriteCol() + 1);
-			else {
-				this.setCurrentSpriteCol(0);
-			}
-		}
-	}
 	
 	public void render(Graphics g, Canvas canvas) {
-		g.drawImage(this.getSpriteSheet().slice(this.getCurrentSpriteCol(), this.getCurrentSpriteRow(), this.width, this.height), (int)this.getX(), (int)this.getY(), canvas);	
+		g.drawImage(this.getSpriteSheet().slice(this.getSpriteSheet().getCurrentCol(), this.getSpriteSheet().getCurrentRow(), this.width, this.height), (int)this.getX(), (int)this.getY(), canvas);	
 	}
 	
 	public void keyEvent(KeyboardInputListener keyboardInputListener) {
 		if(keyboardInputListener.isKeyDown(KeyEvent.VK_LEFT)) {
 			this.setVelx(-this.getSpeed());
-			this.setCurrentSpriteRow(1);
+			this.getSpriteSheet().setCurrentRow(1);
 		}
 		else if(keyboardInputListener.isKeyDown(KeyEvent.VK_RIGHT)) {
 			this.setVelx(this.getSpeed());
-			this.setCurrentSpriteRow(2);
+			this.getSpriteSheet().setCurrentRow(2);
 		}
 		else {
 			this.setVelx(0);
