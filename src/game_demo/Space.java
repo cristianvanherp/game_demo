@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +14,7 @@ public abstract class Space extends Canvas implements Runnable, InputSensible {
 	private double FPS, TPS, APS;
 	private boolean running;
 	private KeyboardInputListener keyboardInputListener;
+	private MouseInputListener mouseInputListener;
 	private Thread thread;
 	Map map;
 	
@@ -28,7 +30,9 @@ public abstract class Space extends Canvas implements Runnable, InputSensible {
 	
 	public void init() {
 		this.keyboardInputListener = new KeyboardInputListener(this);
+		this.mouseInputListener = new MouseInputListener(this);
 		this.addKeyListener(this.keyboardInputListener);
+		this.addMouseListener(this.mouseInputListener);
 		this.requestFocus();
 	}
 	
@@ -92,6 +96,7 @@ public abstract class Space extends Canvas implements Runnable, InputSensible {
 	public abstract void tick();
 	public abstract void animate();
 	public abstract void keyEvent();
+	public abstract void mouseEvent(MouseEvent mouseEvent);
 	
 	//Getters and Setters
 	public double getFPS() {

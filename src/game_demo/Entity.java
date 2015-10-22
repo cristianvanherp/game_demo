@@ -3,6 +3,7 @@ package game_demo;
 import java.awt.Canvas;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Entity extends GameObject {
@@ -18,6 +19,7 @@ public class Entity extends GameObject {
 		
 		this.setX(this.x + this.getVelx());
 		this.setY(this.y + this.getVely());
+		
 		this.handleCollision(gameObjects);
 	}
 	

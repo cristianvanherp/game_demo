@@ -11,7 +11,7 @@ import javax.imageio.ImageIO;
 
 public class Map {
 	private String backgroundPath;
-	private BufferedImage background;
+	private transient BufferedImage background;
 	private List<GameObject> gameObjects;
 	private int gravity, maxFallingSpeed;
 	
@@ -59,7 +59,9 @@ public class Map {
 	}
 	
 	public void keyEvent(KeyboardInputListener keyboardInputListener) {
-		
+		for(GameObject gameObject: this.gameObjects) {
+			gameObject.keyEvent(keyboardInputListener);
+		}
 	}
 	
 	public void reload() {
