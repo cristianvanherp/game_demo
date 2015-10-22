@@ -14,16 +14,13 @@ public abstract class Space extends Canvas implements Runnable, InputSensible {
 	private boolean running;
 	private KeyboardInputListener keyboardInputListener;
 	private Thread thread;
-	private List<GameObject> gameObjects;
-	private int gravity, maxFallingSpeed;
+	Map map;
 	
-	public Space(double FPS, double TPS, double APS, int gravity, int maxFallingSpeed) {
+	public Space(double FPS, double TPS, double APS, String backgroundPath, int gravity, int maxFallingSpeed) {
 		this.FPS = FPS;
 		this.TPS = TPS;
 		this.APS = APS;
-		this.gravity = gravity;
-		this.maxFallingSpeed = maxFallingSpeed;
-		this.gameObjects = new ArrayList<GameObject>();
+		this.map = new Map(backgroundPath, gravity, maxFallingSpeed);
 		this.setPreferredSize(new Dimension(Window.WIDTH, Window.HEIGHT));
 		this.setMinimumSize(new Dimension(Window.WIDTH, Window.HEIGHT));
 		this.setMaximumSize(new Dimension(Window.WIDTH, Window.HEIGHT));
@@ -145,28 +142,12 @@ public abstract class Space extends Canvas implements Runnable, InputSensible {
 		this.thread = thread;
 	}
 
-	public List<GameObject> getGameObjects() {
-		return gameObjects;
+	public Map getMap() {
+		return map;
 	}
 
-	public void setGameObjects(List<GameObject> gameObjects) {
-		this.gameObjects = gameObjects;
-	}
-
-	public int getGravity() {
-		return gravity;
-	}
-
-	public void setGravity(int gravity) {
-		this.gravity = gravity;
-	}
-
-	public int getMaxFallingSpeed() {
-		return maxFallingSpeed;
-	}
-
-	public void setMaxFallingSpeed(int maxFallingSpeed) {
-		this.maxFallingSpeed = maxFallingSpeed;
+	public void setMap(Map map) {
+		this.map = map;
 	}
 
 }
