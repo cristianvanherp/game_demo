@@ -7,25 +7,25 @@ public class Game {
 	public static double TPS = 65;
 	public static double APS = 7;
 	
-	public List<Stage> stages;
+	public List<Space> spaces;
 	public Stage currentStage;
 	public Window window;
 	
-	public Game(List<Stage> stages) throws Exception {
+	public Game(List<Space> stages) throws Exception {
 		if(stages.size() < 1) {
 			throw new Exception("Empty stage array");
 		}
-		this.stages = stages;
+		this.spaces = stages;
 		this.window = new Window("Game Demo");
 		this.currentStage = (Stage)this.window.getCurrentCanvas();
 	}
 	
 	public void start() {
-		for(Stage stage: this.stages) {
-			this.window.changeCanvas(stage);
-			stage.start();
+		for(Space space: this.spaces) {
+			this.window.changeCanvas(space);
+			space.start();
 			try {
-				stage.thread.join();
+				space.getThread().join();
 			}
 			catch(InterruptedException e) {
 				e.printStackTrace();
