@@ -22,7 +22,7 @@ public abstract class Space extends Canvas implements Runnable, InputSensible {
 		this.FPS = FPS;
 		this.TPS = TPS;
 		this.APS = APS;
-		this.map = new Map(backgroundPath, gravity, maxFallingSpeed);
+		this.map = new Map(backgroundPath, gravity, maxFallingSpeed, 40, 40);
 		this.setPreferredSize(new Dimension(Window.WIDTH, Window.HEIGHT));
 		this.setMinimumSize(new Dimension(Window.WIDTH, Window.HEIGHT));
 		this.setMaximumSize(new Dimension(Window.WIDTH, Window.HEIGHT));
@@ -86,7 +86,7 @@ public abstract class Space extends Canvas implements Runnable, InputSensible {
 			
 			if((System.currentTimeMillis() - timer) > 1000) {
 				timer = System.currentTimeMillis();
-				System.out.printf("FPS: %d, TPS: %d, APS: %d\n", frames, ticks, animations);
+//				System.out.printf("FPS: %d, TPS: %d, APS: %d\n", frames, ticks, animations);
 				frames = ticks = animations = 0;
 			}
 		}

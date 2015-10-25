@@ -18,11 +18,13 @@ public class Block extends GameObject {
 		
 		this.setX(this.x + this.getVelx());
 		this.setY(this.y + this.getVely());
-		this.handleCollision(gameObjects);
+		
+		if(this.getVelx() != 0 || this.getVely() != 0)
+			this.handleCollision(gameObjects);
 	}
 	
 	public void render(Graphics g, Canvas canvas) {
-		g.drawImage(this.getSpriteSheet().slice(0, 0, this.getSpriteSheet().getSpriteWidth(), this.getSpriteSheet().getSpriteHeight()), (int)this.getX(), (int)this.getY(), (int)this.getWidth()+1, (int)this.getHeight()+1, canvas);
+		g.drawImage(this.getSpriteSheet().slice(0, 0, this.getSpriteSheet().getSpriteWidth(), this.getSpriteSheet().getSpriteHeight()), (int)this.getX(), (int)this.getY(), (int)this.getWidth(), (int)this.getHeight(), canvas);
 	}
 	
 	public void animate() {
@@ -36,7 +38,7 @@ public class Block extends GameObject {
 	public void handleCollision(List<GameObject> gameObjects) {
 		for(GameObject gameObject: gameObjects) {
 			if(this.isBottomColliding(gameObject) && gameObject != this) {
-				this.setY((int)gameObject.getMinY() - 1 - this.height);
+				this.setY((int)gameObject.getMinY() - this.height);
 				this.setVely(0);
 				if(this.isAffectedByGravity()) {
 					this.setFalling(false);

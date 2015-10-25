@@ -52,15 +52,14 @@ public class MapEditor extends Space {
 		Point point;
 		
 		if(mouseEvent.getButton() == MouseEvent.BUTTON1) {
-			point = getClosestValidPoint(mouseEvent.getX(), mouseEvent.getY());
-			this.getMap().getGameObjects().add(new Block(40, 40, (int)point.getX(), (int)point.getY(), 5, new SpriteSheet("/block_grass_1.png", 1, 1, 40, 40, 0, 0, 0, 0), false, 10));
+			Block block = new Block(40, 40, mouseEvent.getX(), mouseEvent.getY(), 5, new SpriteSheet("/block_grass_1.png", 1, 1, 40, 40, 0, 0, 0, 0), false, 10);
+			this.map.addGameObject(block);
 		}
 		else if(mouseEvent.getButton() == MouseEvent.BUTTON2) {
-			
 		}
 		else if(mouseEvent.getButton() == MouseEvent.BUTTON3) {
-			point = getClosestValidPoint(mouseEvent.getX(), mouseEvent.getY());
-			this.getMap().getGameObjects().add(new Entity(50, 70, (int)point.getX(), (int)point.getY(), 3, new SpriteSheet("/spritesheet_1_player.png", 4, 3, 32, 32, 1, 2, 4, 0), true, 17));
+			Entity entity = new Entity(40, 40, mouseEvent.getX(), mouseEvent.getY(), 3, new SpriteSheet("/spritesheet_1_player.png", 4, 3, 32, 32, 1, 2, 4, 0), true, 17);
+			this.map.addGameObject(entity);
 		}
 	}
 	
@@ -82,22 +81,5 @@ public class MapEditor extends Space {
 	}
 	
 	//Utility Methods
-	public boolean isPointValid(int x, int y) {
-		if(x % this.getBlockWidth() != 0 || y % this.getBlockHeight() != 0) {
-			return false;
-		}
-		
-		return true;
-	}
-	
-	public Point getClosestValidPoint(int x, int y) {
-		if(this.isPointValid(x, y))
-			return new Point(x, y);
-		
-		int validX = x - (x % this.getBlockWidth());
-		int validY = y - (y % this.getBlockHeight());
-
-		return new Point(validX, validY);
-	}
 
 }

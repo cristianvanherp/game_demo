@@ -34,7 +34,8 @@ public abstract class GameObject extends Bound {
 		this.x = x;
 		this.y = y;
 		this.affectedByGravity = affectedByGravity;
-
+		if(this.affectedByGravity)
+			this.vely = -1;
 
 		
 		try {
@@ -186,25 +187,25 @@ public abstract class GameObject extends Bound {
 	}
 	
 	protected boolean isBottomColliding(GameObject gameObject) {
-		if(this.getBoundaryBottom().collides(gameObject))
+		if(this.getBoundaryBottom().intersects(gameObject))
 			return true;
 		return false;
 	}
 	
 	protected boolean isTopColliding(GameObject gameObject) {
-		if(this.getBoundaryTop().collides(gameObject))
+		if(this.getBoundaryTop().intersects(gameObject))
 			return true;
 		return false;
 	}
 	
 	protected boolean isLeftColliding(GameObject gameObject) {
-		if(this.getBoundaryLeft().collides(gameObject))
+		if(this.getBoundaryLeft().intersects(gameObject))
 			return true;
 		return false;
 	}
 	
 	protected boolean isRightColliding(GameObject gameObject) {
-		if(this.getBoundaryRight().collides(gameObject))
+		if(this.getBoundaryRight().intersects(gameObject))
 			return true;
 		return false;
 	}

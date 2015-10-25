@@ -20,7 +20,8 @@ public class Entity extends GameObject {
 		this.setX(this.x + this.getVelx());
 		this.setY(this.y + this.getVely());
 		
-		this.handleCollision(gameObjects);
+		if(this.getVelx() != 0 || this.getVely() != 0)
+			this.handleCollision(gameObjects);
 	}
 	
 	public void render(Graphics g, Canvas canvas) {
@@ -58,12 +59,12 @@ public class Entity extends GameObject {
 	private void handleCollision(List<GameObject> gameObjects) {
 		for(GameObject gameObject: gameObjects) {
 			if(this.isTopColliding(gameObject) && gameObject != this) {
-				this.setY((int)gameObject.getMaxY() + 1);
+				this.setY((int)gameObject.getMaxY());
 				this.setVely(0);
 			}
 			
 			if(this.isBottomColliding(gameObject) && gameObject != this) {
-				this.setY((int)gameObject.getMinY() - 1 - this.height);
+				this.setY((int)gameObject.getMinY() - this.height);
 				this.setVely(0);
 				this.setFalling(false);
 			}
@@ -72,11 +73,11 @@ public class Entity extends GameObject {
 			}
 			
 			if(this.isLeftColliding(gameObject) && gameObject != this) {
-				this.setX((int)gameObject.getMaxX() + 1);
+				this.setX((int)gameObject.getMaxX());
 			}
 			
 			if(this.isRightColliding(gameObject) && gameObject != this) {
-				this.setX((int)gameObject.getMinX() - 1 - this.width);
+				this.setX((int)gameObject.getMinX() - this.width);
 			}
 		}
 	}
