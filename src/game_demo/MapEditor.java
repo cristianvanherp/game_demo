@@ -8,12 +8,13 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferStrategy;
 
 public class MapEditor extends Space {
-	private int blockWidth, blockHeight;
+	private int blockWidth, blockHeight, moveSpeed;;
 
-	public MapEditor(double FPS, double TPS, double APS, String backgroundPath, int gravity, int maxFallingSpeed, int blockWidth, int blockHeight) {
+	public MapEditor(double FPS, double TPS, double APS, String backgroundPath, int gravity, int maxFallingSpeed, int blockWidth, int blockHeight, int moveSpeed) {
 		super(FPS, TPS, APS, backgroundPath, gravity, maxFallingSpeed);
 		this.blockWidth = blockWidth;
 		this.blockHeight = blockHeight;
+		this.moveSpeed = moveSpeed;
 	}
 
 	public void render() {
@@ -27,7 +28,7 @@ public class MapEditor extends Space {
 		Graphics g = bs.getDrawGraphics();
 		g.setColor(new Color(0, 0, 0));
 		g.fillRect(0, 0, Window.WIDTH, Window.HEIGHT);
-		this.map.render(g, this);
+		this.map.render(g, this, this.getCamera());
 		
 		g.dispose();
 		bs.show();
@@ -45,6 +46,18 @@ public class MapEditor extends Space {
 		if(this.getKeyboardInputListener().isKeyDown(KeyEvent.VK_ESCAPE)) {
 			this.stop();
 		}
+		if(this.getKeyboardInputListener().isKeyDown(KeyEvent.VK_RIGHT)) {
+//			this.getCamera().moveRight(this.moveSpeed);
+		}
+		else if(this.getKeyboardInputListener().isKeyDown(KeyEvent.VK_LEFT)) {
+//			this.getCamera().moveLeft(this.moveSpeed);
+		}
+		if(this.getKeyboardInputListener().isKeyDown(KeyEvent.VK_UP)) {
+//			this.getCamera().moveUp(this.moveSpeed);
+		}
+		else if(this.getKeyboardInputListener().isKeyDown(KeyEvent.VK_DOWN)) {
+//			this.getCamera().moveDown(this.moveSpeed);
+		}
 		this.map.keyEvent(this.getKeyboardInputListener());
 	}
 	
@@ -52,13 +65,13 @@ public class MapEditor extends Space {
 		Point point;
 		
 		if(mouseEvent.getButton() == MouseEvent.BUTTON1) {
-			Block block = new Block(40, 40, mouseEvent.getX(), mouseEvent.getY(), 5, new SpriteSheet("/block_grass_1.png", 1, 1, 40, 40, 0, 0, 0, 0), false, 10);
+			Block block = new Block(40, 40, mouseEvent.getX() + this.getCamera().getCurrentOffsetX(), mouseEvent.getY() + this.getCamera().getCurrentOffsetY(), 5, new SpriteSheet("/block_grass_1.png", 1, 1, 40, 40, 0, 0, 0, 0), false, 10);
 			this.map.addGameObject(block);
 		}
 		else if(mouseEvent.getButton() == MouseEvent.BUTTON2) {
 		}
 		else if(mouseEvent.getButton() == MouseEvent.BUTTON3) {
-			Entity entity = new Entity(40, 40, mouseEvent.getX(), mouseEvent.getY(), 3, new SpriteSheet("/spritesheet_1_player.png", 4, 3, 32, 32, 1, 2, 4, 0), true, 17);
+			Entity entity = new Entity(40, 40, mouseEvent.getX() + this.getCamera().getCurrentOffsetX(), mouseEvent.getY() + this.getCamera().getCurrentOffsetY(), 3, new SpriteSheet("/spritesheet_1_player.png", 4, 3, 32, 32, 1, 2, 4, 0), true, 17);
 			this.map.addGameObject(entity);
 		}
 	}

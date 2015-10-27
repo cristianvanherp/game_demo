@@ -42,14 +42,14 @@ public class Map {
 	}
 	
 	//Utility methods
-	public void render(Graphics g, Canvas canvas) {
+	public void render(Graphics g, Canvas canvas, Camera camera) {
 		if(this.background != null)
 			g.drawImage(this.background, 0, 0, canvas);
 		
 		for(List<GameObject> gameObjectRow: this.gameObjects) {
 			for(GameObject gameObjectCol: gameObjectRow) {
 				if(gameObjectCol != null)
-					gameObjectCol.render(g, canvas);
+					gameObjectCol.render(g, canvas, camera);
 //					gameObjectCol.renderBoundaries(g, canvas);
 			}
 		}

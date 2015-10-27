@@ -24,8 +24,8 @@ public class Entity extends GameObject {
 			this.handleCollision(gameObjects);
 	}
 	
-	public void render(Graphics g, Canvas canvas) {
-		g.drawImage(this.getSpriteSheet().slice(this.getSpriteSheet().getCurrentCol(), this.getSpriteSheet().getCurrentRow(), this.getSpriteSheet().getSpriteWidth(), this.getSpriteSheet().getSpriteHeight()), (int)this.getX(), (int)this.getY(), (int)this.getWidth() + 1, (int)this.getHeight()+1, canvas);	
+	public void render(Graphics g, Canvas canvas, Camera camera) {
+		g.drawImage(this.getSpriteSheet().slice(this.getSpriteSheet().getCurrentCol(), this.getSpriteSheet().getCurrentRow(), this.getSpriteSheet().getSpriteWidth(), this.getSpriteSheet().getSpriteHeight()), (int)this.getX() - camera.getCurrentOffsetX(), (int)this.getY() - camera.getCurrentOffsetY(), (int)this.getWidth() + 1, (int)this.getHeight()+1, canvas);	
 	}
 	
 	public void animate() {

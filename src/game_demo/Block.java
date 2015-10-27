@@ -23,8 +23,8 @@ public class Block extends GameObject {
 			this.handleCollision(gameObjects);
 	}
 	
-	public void render(Graphics g, Canvas canvas) {
-		g.drawImage(this.getSpriteSheet().slice(0, 0, this.getSpriteSheet().getSpriteWidth(), this.getSpriteSheet().getSpriteHeight()), (int)this.getX(), (int)this.getY(), (int)this.getWidth(), (int)this.getHeight(), canvas);
+	public void render(Graphics g, Canvas canvas, Camera camera) {
+		g.drawImage(this.getSpriteSheet().slice(0, 0, this.getSpriteSheet().getSpriteWidth(), this.getSpriteSheet().getSpriteHeight()), (int)this.getX() - camera.getCurrentOffsetX(), (int)this.getY() - camera.getCurrentOffsetY(), (int)this.getWidth(), (int)this.getHeight(), canvas);
 	}
 	
 	public void animate() {

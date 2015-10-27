@@ -49,7 +49,7 @@ public abstract class GameObject extends Bound {
 	}
 	
 	public abstract void tick(List<GameObject> gameObjects, int gravity, int maxFallSpeed);
-	public abstract void render(Graphics g, Canvas canvas);
+	public abstract void render(Graphics g, Canvas canvas, Camera camera);
 	public abstract void animate();
 	public abstract void keyEvent(KeyboardInputListener keyboardInputListener);
 	

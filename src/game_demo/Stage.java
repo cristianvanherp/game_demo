@@ -15,7 +15,6 @@ public class Stage extends Space {
 	
 	public Stage(double FPS, double TPS, double APS, String backgroundPath, int gravity, int maxFallingSpeed) {
 		super(FPS, TPS, APS, backgroundPath, gravity, maxFallingSpeed);
-
 		this.setPreferredSize(new Dimension(Window.WIDTH, Window.HEIGHT));
 		this.setMinimumSize(new Dimension(Window.WIDTH, Window.HEIGHT));
 		this.setMaximumSize(new Dimension(Window.WIDTH, Window.HEIGHT));
@@ -32,7 +31,7 @@ public class Stage extends Space {
 		Graphics g = bs.getDrawGraphics();
 		g.setColor(new Color(0, 0, 0));
 		g.fillRect(0, 0, Window.WIDTH, Window.HEIGHT);
-		this.map.render(g, this);
+		this.map.render(g, this, this.getCamera());
 		
 		g.dispose();
 		bs.show();

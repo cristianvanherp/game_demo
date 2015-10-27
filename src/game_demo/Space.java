@@ -12,6 +12,7 @@ import java.util.List;
 
 public abstract class Space extends Canvas implements Runnable, InputSensible {
 	private double FPS, TPS, APS;
+	private Camera camera;
 	private boolean running;
 	private KeyboardInputListener keyboardInputListener;
 	private MouseInputListener mouseInputListener;
@@ -23,6 +24,7 @@ public abstract class Space extends Canvas implements Runnable, InputSensible {
 		this.TPS = TPS;
 		this.APS = APS;
 		this.map = new Map(backgroundPath, gravity, maxFallingSpeed, 40, 40);
+		this.camera = new Camera(1000, 1000);
 		this.setPreferredSize(new Dimension(Window.WIDTH, Window.HEIGHT));
 		this.setMinimumSize(new Dimension(Window.WIDTH, Window.HEIGHT));
 		this.setMaximumSize(new Dimension(Window.WIDTH, Window.HEIGHT));
@@ -153,6 +155,14 @@ public abstract class Space extends Canvas implements Runnable, InputSensible {
 
 	public void setMap(Map map) {
 		this.map = map;
+	}
+
+	public Camera getCamera() {
+		return camera;
+	}
+
+	public void setCamera(Camera camera) {
+		this.camera = camera;
 	}
 
 }
