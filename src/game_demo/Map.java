@@ -4,13 +4,16 @@ import java.awt.Canvas;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.imageio.ImageIO;
 
-public class Map {
+public class Map implements Serializable {
 	private String backgroundPath;
 	private transient BufferedImage background;
 	private List<List<GameObject>> gameObjects;
@@ -177,9 +180,29 @@ public class Map {
 	public void reload() {
 		try {
 			this.background = ImageIO.read(getClass().getResource(this.backgroundPath));
+			for(List<GameObject> gameObjectRow: this.gameObjects) {
+				for(GameObject gameObjectCol: gameObjectRow) {
+					if(gameObjectCol != null)
+						gameObjectCol.getSpriteSheet().reload();
+				}
+			}
 		}
 		catch (IOException e) {
 			e.printStackTrace();
+		}
+	}
+	
+	public void serialize(String path) {
+		try {
+			FileOutputStream fileOut = new FileOutputStream(path);
+			ObjectOutputStream objOut = new ObjectOutputStream(fileOut);
+			objOut.writeObject(this);
+			objOut.close();
+			fileOut.close();
+			System.out.println("Map " + path + " saved with success");
+		}
+		catch(IOException e) {
+			System.out.println("Error while saving map: " + e.getMessage());	
 		}
 	}
 

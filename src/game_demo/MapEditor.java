@@ -8,10 +8,10 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferStrategy;
 
 public class MapEditor extends Space {
-	private int blockWidth, blockHeight, moveSpeed;;
+	private int blockWidth, blockHeight, moveSpeed;
 
-	public MapEditor(double FPS, double TPS, double APS, String backgroundPath, int gravity, int maxFallingSpeed, int blockWidth, int blockHeight, int moveSpeed) {
-		super(FPS, TPS, APS, backgroundPath, gravity, maxFallingSpeed);
+	public MapEditor(double FPS, double TPS, double APS, String backgroundPath, int gravity, int maxFallingSpeed, int blockWidth, int blockHeight, int moveSpeed, String mapPath) {
+		super(FPS, TPS, APS, backgroundPath, gravity, maxFallingSpeed, mapPath);
 		this.blockWidth = blockWidth;
 		this.blockHeight = blockHeight;
 		this.moveSpeed = moveSpeed;
@@ -46,19 +46,22 @@ public class MapEditor extends Space {
 		if(this.getKeyboardInputListener().isKeyDown(KeyEvent.VK_ESCAPE)) {
 			this.stop();
 		}
+		if(this.getKeyboardInputListener().isKeyDown(KeyEvent.VK_S)) {
+			this.getMap().serialize(this.getMapPath());
+		}
 		if(this.getKeyboardInputListener().isKeyDown(KeyEvent.VK_RIGHT)) {
-//			this.getCamera().moveRight(this.moveSpeed);
+			this.getCamera().moveRight(this.moveSpeed);
 		}
 		else if(this.getKeyboardInputListener().isKeyDown(KeyEvent.VK_LEFT)) {
-//			this.getCamera().moveLeft(this.moveSpeed);
+			this.getCamera().moveLeft(this.moveSpeed);
 		}
 		if(this.getKeyboardInputListener().isKeyDown(KeyEvent.VK_UP)) {
-//			this.getCamera().moveUp(this.moveSpeed);
+			this.getCamera().moveUp(this.moveSpeed);
 		}
 		else if(this.getKeyboardInputListener().isKeyDown(KeyEvent.VK_DOWN)) {
-//			this.getCamera().moveDown(this.moveSpeed);
+			this.getCamera().moveDown(this.moveSpeed);
 		}
-		this.map.keyEvent(this.getKeyboardInputListener());
+//		this.map.keyEvent(this.getKeyboardInputListener());
 	}
 	
 	public void mouseEvent(MouseEvent mouseEvent) {

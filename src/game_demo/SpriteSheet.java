@@ -2,10 +2,12 @@ package game_demo;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.io.Serializable;
+import java.io.Serializable;
 
 import javax.imageio.ImageIO;
 
-public class SpriteSheet {
+public class SpriteSheet implements Serializable {
 	private String imagePath;
 	private transient BufferedImage image;
 	private int numRows, numCols;

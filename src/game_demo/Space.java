@@ -1,34 +1,58 @@
 package game_demo;
 
 import java.awt.Canvas;
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferStrategy;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 
 public abstract class Space extends Canvas implements Runnable, InputSensible {
 	private double FPS, TPS, APS;
 	private Camera camera;
+	private String mapPath;
 	private boolean running;
 	private KeyboardInputListener keyboardInputListener;
 	private MouseInputListener mouseInputListener;
 	private Thread thread;
 	Map map;
 	
-	public Space(double FPS, double TPS, double APS, String backgroundPath, int gravity, int maxFallingSpeed) {
+	public Space(double FPS, double TPS, double APS, String backgroundPath, int gravity, int maxFallingSpeed, String mapPath) {
 		this.FPS = FPS;
 		this.TPS = TPS;
 		this.APS = APS;
 		this.map = new Map(backgroundPath, gravity, maxFallingSpeed, 40, 40);
 		this.camera = new Camera(1000, 1000);
+		this.mapPath = mapPath;
+		this.loadMap();
 		this.setPreferredSize(new Dimension(Window.WIDTH, Window.HEIGHT));
 		this.setMinimumSize(new Dimension(Window.WIDTH, Window.HEIGHT));
 		this.setMaximumSize(new Dimension(Window.WIDTH, Window.HEIGHT));
 	}
+	
+	public void loadMap() {
+		FileInputStream fileIn;
+	    ObjectInputStream objIn;
+	 	
+		try {
+			fileIn = new FileInputStream(this.mapPath);
+			objIn = new ObjectInputStream(fileIn);
+			this.setMap((Map)objIn.readObject());
+			fileIn.close();
+			objIn.close();
+		}
+		catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+		catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		this.getMap().reload();
+    }
 	
 	public void init() {
 		this.keyboardInputListener = new KeyboardInputListener(this);
@@ -163,6 +187,14 @@ public abstract class Space extends Canvas implements Runnable, InputSensible {
 
 	public void setCamera(Camera camera) {
 		this.camera = camera;
+	}
+
+	public String getMapPath() {
+		return mapPath;
+	}
+
+	public void setMapPath(String mapPath) {
+		this.mapPath = mapPath;
 	}
 
 }

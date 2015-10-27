@@ -13,8 +13,8 @@ import java.util.List;
 public class Stage extends Space {
 	public Entity entity;
 	
-	public Stage(double FPS, double TPS, double APS, String backgroundPath, int gravity, int maxFallingSpeed) {
-		super(FPS, TPS, APS, backgroundPath, gravity, maxFallingSpeed);
+	public Stage(double FPS, double TPS, double APS, String backgroundPath, int gravity, int maxFallingSpeed, String mapPath) {
+		super(FPS, TPS, APS, backgroundPath, gravity, maxFallingSpeed, mapPath);
 		this.setPreferredSize(new Dimension(Window.WIDTH, Window.HEIGHT));
 		this.setMinimumSize(new Dimension(Window.WIDTH, Window.HEIGHT));
 		this.setMaximumSize(new Dimension(Window.WIDTH, Window.HEIGHT));
