@@ -74,8 +74,8 @@ public class MapEditor extends Space {
 		else if(mouseEvent.getButton() == MouseEvent.BUTTON2) {
 		}
 		else if(mouseEvent.getButton() == MouseEvent.BUTTON3) {
-			Entity entity = new Entity(40, 40, mouseEvent.getX() + this.getCamera().getCurrentOffsetX(), mouseEvent.getY() + this.getCamera().getCurrentOffsetY(), 3, new SpriteSheet("/spritesheet_1_player.png", 4, 3, 32, 32, 1, 2, 4, 0), true, 17);
-			this.map.addGameObject(entity);
+			Player player = new Player(40, 40, mouseEvent.getX() + this.getCamera().getCurrentOffsetX(), mouseEvent.getY() + this.getCamera().getCurrentOffsetY(), 3, new SpriteSheet("/spritesheet_1_player.png", 4, 3, 32, 32, 1, 2, 4, 0), true, 17);
+			this.map.addGameObject(player);
 		}
 	}
 	

@@ -11,13 +11,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Stage extends Space {
-	public Entity entity;
-	
+	private static final long serialVersionUID = -5457552461161287550L;
+	Player player;
+
 	public Stage(double FPS, double TPS, double APS, String backgroundPath, int gravity, int maxFallingSpeed, String mapPath) {
 		super(FPS, TPS, APS, backgroundPath, gravity, maxFallingSpeed, mapPath);
 		this.setPreferredSize(new Dimension(Window.WIDTH, Window.HEIGHT));
 		this.setMinimumSize(new Dimension(Window.WIDTH, Window.HEIGHT));
 		this.setMaximumSize(new Dimension(Window.WIDTH, Window.HEIGHT));
+		this.setPlayer();
+	}
+	
+	public void setPlayer() {
+		this.player = this.getMap().getPlayer();
 	}
 	
 	public void render() {

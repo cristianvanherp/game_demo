@@ -205,6 +205,18 @@ public class Map implements Serializable {
 			System.out.println("Error while saving map: " + e.getMessage());	
 		}
 	}
+	
+	public Player getPlayer() {
+		for(List<GameObject> gameObjectRow: this.gameObjects) {
+			for(GameObject gameObjectCol: gameObjectRow) {
+				if(gameObjectCol != null) {
+					if(gameObjectCol instanceof Player)
+						return (Player)gameObjectCol;
+				}
+			}
+		}
+		return null;
+	}
 
 	//Getters and Setters
 	public String getBackgroundPath() {
