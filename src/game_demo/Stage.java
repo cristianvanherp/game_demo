@@ -52,7 +52,8 @@ public class Stage extends Space {
 	
 	public void tick() {
 		this.map.tick();
-		this.adjustPlayerBasedOffset();
+		if(this.player != null)
+			this.adjustPlayerBasedOffset();
 	}
 	
 	public void animate() {

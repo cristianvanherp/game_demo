@@ -9,8 +9,6 @@ public class Main {
 		List<Space> spaces = new ArrayList();
 //		spaces.add(new MapEditor(Game.FPS, Game.TPS, Game.APS, "/basic_bg.png", 1, 10, 40, 40, 10, "teste.map"));
 		spaces.add(new Stage(Game.FPS, Game.TPS, Game.APS, "/basic_bg.png", 1, 10, "teste.map"));
-//		spaces.add(new Stage(Game.FPS, Game.TPS, Game.APS, "/basic_bg.png", 1, 10));
-//		spaces.add(new Stage(Game.FPS, Game.TPS, Game.APS, "/basic_bg.png", 1, 10));
 		
 		try {
 			Game game = new Game(spaces);

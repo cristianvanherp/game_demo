@@ -44,7 +44,6 @@ public class Map implements Serializable {
 		this.minItemHeight = minItemHeight;
 	}
 	
-	//Utility methods
 	public void render(Graphics g, Canvas canvas, Camera camera) {
 		if(this.background != null)
 			g.drawImage(this.background, 0, 0, canvas);
