@@ -26,6 +26,13 @@ public class Stage extends Space {
 		this.player = this.getMap().getPlayer();
 	}
 	
+	public void adjustPlayerBasedOffset() {
+		if(this.player.getX() > Window.WIDTH/2)
+			this.getCamera().setCurrentOffsetX((int)this.player.getX() - Window.WIDTH/2);
+		if(this.player.getY() > Window.HEIGHT/2)
+		this.getCamera().setCurrentOffsetY((int)this.player.getY() - Window.HEIGHT/2);
+	}
+	
 	public void render() {
 		BufferStrategy bs = this.getBufferStrategy();
 		
@@ -45,6 +52,7 @@ public class Stage extends Space {
 	
 	public void tick() {
 		this.map.tick();
+		this.adjustPlayerBasedOffset();
 	}
 	
 	public void animate() {

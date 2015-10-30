@@ -38,6 +38,14 @@ public class Camera {
 		return currentOffsetY;
 	}
 	
+	public void setCurrentOffsetX(int currentOffsetX) {
+		this.currentOffsetX = currentOffsetX;
+	}
+
+	public void setCurrentOffsetY(int currentOffsetY) {
+		this.currentOffsetY = currentOffsetY;
+	}
+
 	//Utility methods
 	public void moveRight(int pixels) {
 		if(this.maxOffsetX != -1) {
