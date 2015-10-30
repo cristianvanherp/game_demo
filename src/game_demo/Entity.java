@@ -10,8 +10,8 @@ public abstract class Entity extends GameObject {
 	
 	private static final long serialVersionUID = -529082995350931837L;
 
-	public Entity(int width, int height, int x, int y, int speed, SpriteSheet spriteSheet, boolean affectedByGravity, int jumpSpeed) {
-		super(width, height, x, y, speed, spriteSheet, affectedByGravity, jumpSpeed);
+	public Entity(int width, int height, int x, int y, SpriteSheet spriteSheet, boolean affectedByGravity) {
+		super(width, height, x, y, spriteSheet, affectedByGravity);
 	}
 	
 	//Game Object methods

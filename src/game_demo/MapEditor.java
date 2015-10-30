@@ -9,12 +9,14 @@ import java.awt.image.BufferStrategy;
 
 public class MapEditor extends Space {
 	private int blockWidth, blockHeight, moveSpeed;
+	private GameObject selectedGameObject;
 
 	public MapEditor(double FPS, double TPS, double APS, String backgroundPath, int gravity, int maxFallingSpeed, int blockWidth, int blockHeight, int moveSpeed, String mapPath) {
 		super(FPS, TPS, APS, backgroundPath, gravity, maxFallingSpeed, mapPath);
 		this.blockWidth = blockWidth;
 		this.blockHeight = blockHeight;
 		this.moveSpeed = moveSpeed;
+		GameObjectFactory.configure(this.getMap());
 	}
 
 	public void render() {
@@ -68,13 +70,16 @@ public class MapEditor extends Space {
 		Point point;
 		
 		if(mouseEvent.getButton() == MouseEvent.BUTTON1) {
-			Block block = new Block(40, 40, mouseEvent.getX() + this.getCamera().getCurrentOffsetX(), mouseEvent.getY() + this.getCamera().getCurrentOffsetY(), 5, new SpriteSheet("/block_grass_1.png", 1, 1, 40, 40, 0, 0, 0, 0), false, 10);
+			Block block = new Block(40, 40, mouseEvent.getX() + this.getCamera().getCurrentOffsetX(), mouseEvent.getY() + this.getCamera().getCurrentOffsetY(), new SpriteSheet("/block_grass_1.png", 1, 1, 40, 40, 0, 0, 0, 0), false);
+			block = GameObjectFactory.getInstance().createBlock("/block_grass_1.png", 1, 1);
+			block.setX(mouseEvent.getX() + this.getCamera().getCurrentOffsetX());
+			block.setY(mouseEvent.getY() + this.getCamera().getCurrentOffsetY());
 			this.map.addGameObject(block);
 		}
 		else if(mouseEvent.getButton() == MouseEvent.BUTTON2) {
 		}
 		else if(mouseEvent.getButton() == MouseEvent.BUTTON3) {
-			Player player = new Player(40, 40, mouseEvent.getX() + this.getCamera().getCurrentOffsetX(), mouseEvent.getY() + this.getCamera().getCurrentOffsetY(), 3, new SpriteSheet("/spritesheet_1_player.png", 4, 3, 32, 32, 1, 2, 4, 0), true, 17);
+			Player player = new Player(40, 40, mouseEvent.getX() + this.getCamera().getCurrentOffsetX(), mouseEvent.getY() + this.getCamera().getCurrentOffsetY(), new SpriteSheet("/spritesheet_1_player.png", 4, 3, 32, 32, 1, 2, 4, 0), true);
 			this.map.addGameObject(player);
 		}
 	}

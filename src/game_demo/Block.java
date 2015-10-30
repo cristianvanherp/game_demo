@@ -7,8 +7,8 @@ import java.util.List;
 
 public class Block extends GameObject {
 	
-	public Block(int width, int height, int x, int y, int speed, SpriteSheet spriteSheet, boolean affectedByGravity, int jumpSpeed) {
-		super(width, height, x, y, speed, spriteSheet, affectedByGravity, jumpSpeed);
+	public Block(int width, int height, int x, int y, SpriteSheet spriteSheet, boolean affectedByGravity) {
+		super(width, height, x, y, spriteSheet, affectedByGravity);
 	}
 	
 	//Game Object methods
