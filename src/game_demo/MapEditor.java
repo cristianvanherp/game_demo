@@ -6,6 +6,7 @@ import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferStrategy;
+import java.util.ConcurrentModificationException;
 
 public class MapEditor extends Space {
 	private int blockWidth, blockHeight, moveSpeed;
@@ -30,18 +31,27 @@ public class MapEditor extends Space {
 		Graphics g = bs.getDrawGraphics();
 		g.setColor(new Color(0, 0, 0));
 		g.fillRect(0, 0, Window.WIDTH, Window.HEIGHT);
-		this.map.render(g, this, this.getCamera());
+		try {
+			this.map.render(g, this, this.getCamera());	
+		}
+		catch(ConcurrentModificationException e){}
 		
 		g.dispose();
 		bs.show();
 	}
 
 	public void tick() {
-		this.map.tick();
+		try {
+			this.map.tick(this.getCamera());
+		}
+		catch(ConcurrentModificationException e){}
 	}
 
 	public void animate() {
-		this.map.animate();
+		try {
+			this.map.animate();
+		}
+		catch(ConcurrentModificationException e){}
 	}
 
 	public void keyEvent() {

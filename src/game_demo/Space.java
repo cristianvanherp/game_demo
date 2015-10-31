@@ -112,7 +112,7 @@ public abstract class Space extends Canvas implements Runnable, InputSensible {
 			
 			if((System.currentTimeMillis() - timer) > 1000) {
 				timer = System.currentTimeMillis();
-//				System.out.printf("FPS: %d, TPS: %d, APS: %d\n", frames, ticks, animations);
+				System.out.printf("FPS: %d, TPS: %d, APS: %d\n", frames, ticks, animations);
 				frames = ticks = animations = 0;
 			}
 		}

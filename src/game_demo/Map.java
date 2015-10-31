@@ -51,10 +51,10 @@ public class Map implements Serializable {
 		if(this.background != null)
 			g.drawImage(this.background, 0, 0, canvas);
 		
-		for(List<Thing> thingRow: this.things) {
-			for(Thing thingCol: thingRow) {
-				if(thingCol != null)
-					thingCol.render(g, canvas, camera);
+		for(Thing thing: this.getOnScreenThings(camera)) {
+			if(thing != null) {
+				if(thing != null)
+					thing.render(g, canvas, camera);
 //					thingCol.renderBoundaries(g, canvas);
 			}
 		}
@@ -66,12 +66,10 @@ public class Map implements Serializable {
 		}
 	}
 	
-	public void tick() {
-		for(List<Thing> thingRow: this.things) {
-			for(Thing thingCol: thingRow) {
-				if(thingCol != null) {
-					thingCol.tick(this.getGameObjectsCollision(thingCol), this.getGravity(), this.getMaxFallingSpeed());	
-				}
+	public void tick(Camera camera) {
+		for(Thing thing: this.getOnScreenThings(camera)) {
+			if(thing != null) {
+				thing.tick(this.getGameObjectsCollision(thing), this.getGravity(), this.getMaxFallingSpeed());	
 			}
 		}
 		for(Entity entity: this.entities) {
@@ -79,6 +77,8 @@ public class Map implements Serializable {
 				entity.tick(this.getGameObjectsCollision(entity), this.getGravity(), this.getMaxFallingSpeed());	
 			}
 		}
+		
+		this.getOnScreenThings(camera);
 	}
 	
 	public void animate() {
@@ -265,6 +265,38 @@ public class Map implements Serializable {
 		}
 		
 		return null;
+	}
+	
+	public List<Thing> getOnScreenThings(Camera camera) {
+		List<Thing> things = new ArrayList<Thing>();
+		Thing thing;
+		
+		int minCol = camera.getCurrentOffsetX() / this.getMinItemWidth() - 3;
+		int maxCol = (camera.getCurrentOffsetX() + Window.WIDTH) / this.getMinItemWidth() + 3;
+		int minRow = camera.getCurrentOffsetY() / this.getMinItemHeight() - 3;
+		int maxRow = (camera.getCurrentOffsetY() + Window.HEIGHT) / this.getMinItemHeight() + 3;
+		
+		if(minCol < 0)
+			minCol = 0;
+		if(minRow < 0)
+			minRow = 0;
+		
+		for(int row = minRow ; row <= maxRow ; row++) {
+			for(int col = minCol ; col <= maxCol ; col++) {
+				try {
+					thing = this.things.get(row).get(col);
+					if(thing != null)
+						things.add(thing);
+				}
+				catch(IndexOutOfBoundsException e) {
+					
+				}
+			}
+		}
+		
+//		System.out.printf("minCol: %d, maxCol: %d --- minRow: %d, maxRow: %d -- count: %d\n", minCol, maxCol, minRow, maxRow, things.size());
+		
+		return things;
 	}
 
 	//Getters and Setters
