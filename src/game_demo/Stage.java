@@ -64,7 +64,7 @@ public class Stage extends Space {
 		if(this.getKeyboardInputListener().isKeyDown(KeyEvent.VK_ESCAPE)) {
 			this.stop();
 		}
-		this.map.keyEvent(this.getKeyboardInputListener());
+		this.map.keyEvent(this.getKeyboardInputListener(), this.getCamera());
 	}
 	
 	public void mouseEvent(MouseEvent mouseEvent) {

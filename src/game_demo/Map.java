@@ -95,13 +95,13 @@ public class Map implements Serializable {
 		}
 	}
 	
-	public void keyEvent(KeyboardInputListener keyboardInputListener) {
-		for(List<Thing> thingRow: this.things) {
-			for(Thing thingCol: thingRow) {
-				if(thingCol != null)
-					thingCol.keyEvent(keyboardInputListener);
+	public void keyEvent(KeyboardInputListener keyboardInputListener, Camera camera) {
+		for(Thing thing: this.getOnScreenThings(camera)) {
+			if(thing != null) {
+				thing.keyEvent(keyboardInputListener);
 			}
 		}
+
 		for(Entity entity: this.entities) {
 			if(entity != null) {
 				entity.keyEvent(keyboardInputListener);	
@@ -190,12 +190,7 @@ public class Map implements Serializable {
 	public List<GameObject> getGameObjectsCollision(GameObject gameObject) {
 		List<GameObject> gameObjects = new ArrayList<GameObject>();
 		
-		for(List<Thing> thingRow: this.things) {
-			for(Thing thingCol: thingRow) {
-				if(thingCol != null)
-					gameObjects.add(thingCol);
-			}
-		}
+		gameObjects.addAll(this.getThingsAround(gameObject));
 		
 		for(Entity entity: this.entities) {
 			if(entity != null)
@@ -294,7 +289,38 @@ public class Map implements Serializable {
 			}
 		}
 		
-//		System.out.printf("minCol: %d, maxCol: %d --- minRow: %d, maxRow: %d -- count: %d\n", minCol, maxCol, minRow, maxRow, things.size());
+		return things;
+	}
+	
+	public List<Thing> getThingsAround(GameObject gameObject) {
+		List<Thing> things = new ArrayList<Thing>();
+		Thing thing;
+		
+		int objectCol = (int)gameObject.getX()/this.getMinItemWidth();
+		int objectRow = (int)gameObject.getY()/this.getMinItemHeight();
+	
+		int minCol = objectCol - 3;
+		int minRow = objectRow - 3;
+		int maxCol = objectCol + 3;
+		int maxRow = objectRow + 3;
+		
+		if(minCol < 0)
+			minCol = 0;
+		if(minRow < 0)
+			minRow = 0;
+		
+		for(int row = minRow ; row <= maxRow ; row++) {
+			for(int col = minCol ; col <= maxCol ; col++) {
+				try {
+					thing = this.things.get(row).get(col);
+					if(thing != null)
+						things.add(thing);
+				}
+				catch(IndexOutOfBoundsException e) {
+					
+				}
+			}
+		}
 		
 		return things;
 	}
