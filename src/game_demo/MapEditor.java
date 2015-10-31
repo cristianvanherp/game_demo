@@ -80,8 +80,7 @@ public class MapEditor extends Space {
 		Point point;
 		
 		if(mouseEvent.getButton() == MouseEvent.BUTTON1) {
-			Block block = new Block(40, 40, mouseEvent.getX() + this.getCamera().getCurrentOffsetX(), mouseEvent.getY() + this.getCamera().getCurrentOffsetY(), new SpriteSheet("/block_grass_1.png", 1, 1, 40, 40, 0, 0, 0, 0), false);
-			block = GameObjectFactory.getInstance().createBlock("/block_grass_1.png", 1, 1);
+			Block block = GameObjectFactory.getInstance().createBlock("/block_grass_1.png", 1, 1, 40, 40);
 			block.setX(mouseEvent.getX() + this.getCamera().getCurrentOffsetX());
 			block.setY(mouseEvent.getY() + this.getCamera().getCurrentOffsetY());
 			this.map.addGameObject(block);

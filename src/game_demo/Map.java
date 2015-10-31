@@ -18,7 +18,8 @@ public class Map implements Serializable {
 	private transient BufferedImage background;
 	private List<List<Thing>> things;
 	private List<Entity> entities;
-	private int gravity, maxFallingSpeed, minItemWidth, minItemHeight;
+	private int gravity, maxFallingSpeed, minItemWidth, minItemHeight, maxWidthRate, maxHeightRate;
+	
 	
 	public Map(String backgroundPath, int gravity, int maxFallingSpeed, int minItemWidth, int minItemHeight) {
 		this.backgroundPath = backgroundPath;
@@ -26,6 +27,8 @@ public class Map implements Serializable {
 		this.maxFallingSpeed = maxFallingSpeed;
 		this.minItemWidth = minItemWidth;
 		this.minItemHeight = minItemHeight;
+		this.maxWidthRate = 2;
+		this.maxHeightRate = 2;
 		this.things = new ArrayList<List<Thing>>();
 		this.entities = new ArrayList<Entity>();
 		
@@ -55,13 +58,14 @@ public class Map implements Serializable {
 			if(thing != null) {
 				if(thing != null)
 					thing.render(g, canvas, camera);
-//					thingCol.renderBoundaries(g, canvas);
+//					thing.renderBoundaries(g, canvas, camera);
 			}
 		}
 		
 		for(Entity entity: this.entities) {
 			if(entity != null) {
 				entity.render(g, canvas, camera);
+//				entity.renderBoundaries(g, canvas, camera);
 			}
 		}
 	}
@@ -111,6 +115,9 @@ public class Map implements Serializable {
 	
 	//Utility functions
 	public boolean addGameObject(GameObject gameObject) {
+		if(gameObject.getWidth() > (this.getMinItemWidth() * this.getMaxWidthRate()) || gameObject.getHeight() > (this.getMinItemHeight() * this.getMaxHeightRate()))
+			return false;
+		
 		Point validPoint = this.getClosestValidPoint((int)gameObject.getX(), (int)gameObject.getY());
 		
 		if(!this.isPositionValid((int)validPoint.getX(), (int)validPoint.getY(), (int)gameObject.getWidth(), (int)gameObject.getHeight())) {
@@ -266,10 +273,10 @@ public class Map implements Serializable {
 		List<Thing> things = new ArrayList<Thing>();
 		Thing thing;
 		
-		int minCol = camera.getCurrentOffsetX() / this.getMinItemWidth() - 3;
-		int maxCol = (camera.getCurrentOffsetX() + Window.WIDTH) / this.getMinItemWidth() + 3;
-		int minRow = camera.getCurrentOffsetY() / this.getMinItemHeight() - 3;
-		int maxRow = (camera.getCurrentOffsetY() + Window.HEIGHT) / this.getMinItemHeight() + 3;
+		int minCol = camera.getCurrentOffsetX() / this.getMinItemWidth() - this.getMaxWidthRate();
+		int maxCol = (camera.getCurrentOffsetX() + Window.WIDTH) / this.getMinItemWidth() + this.getMaxWidthRate();
+		int minRow = camera.getCurrentOffsetY() / this.getMinItemHeight() - this.getMaxHeightRate();
+		int maxRow = (camera.getCurrentOffsetY() + Window.HEIGHT) / this.getMinItemHeight() + this.getMaxHeightRate();
 		
 		if(minCol < 0)
 			minCol = 0;
@@ -389,5 +396,27 @@ public class Map implements Serializable {
 	public void setEntities(List<Entity> entities) {
 		this.entities = entities;
 	}
+
+	public int getMaxWidthRate() {
+		return maxWidthRate;
+	}
+
+	public void setMaxWidthRate(int maxWidthRate) {
+		if(maxWidthRate < 2)
+			return;
+		this.maxWidthRate = maxWidthRate;
+	}
+
+	public int getMaxHeightRate() {
+		return maxHeightRate;
+	}
+
+	public void setMaxHeightRate(int maxHeightRate) {
+		if(maxHeightRate < 2)
+			return;
+		this.maxHeightRate = maxHeightRate;
+	}
+	
+	
 	
 }

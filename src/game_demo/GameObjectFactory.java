@@ -21,8 +21,8 @@ public class GameObjectFactory {
 		factoryMap = map;
 	}
 	
-	public Block createBlock(String spritePath, int widthRate, int heightRate) {
-		SpriteSheet spriteSheet = new SpriteSheet(spritePath, 1, 1, factoryMap.getMinItemWidth()*widthRate, factoryMap.getMinItemHeight()*heightRate, 0, 0, 0, 0);
+	public Block createBlock(String spritePath, int widthRate, int heightRate, int spriteWidth, int spriteHeight) {
+		SpriteSheet spriteSheet = new SpriteSheet(spritePath, 1, 1, spriteWidth, spriteHeight, 0, 0, 0, 0);
 		return new Block(factoryMap.getMinItemWidth()*widthRate, factoryMap.getMinItemHeight()*heightRate, -100, -100, spriteSheet, false);
 	}
 }

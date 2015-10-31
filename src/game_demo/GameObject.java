@@ -55,15 +55,15 @@ public abstract class GameObject extends Bound {
 	public abstract void animate();
 	public abstract void keyEvent(KeyboardInputListener keyboardInputListener);
 	
-	public void renderBoundaries(Graphics g, Canvas canvas) {
+	public void renderBoundaries(Graphics g, Canvas canvas, Camera camera) {
 		g.setColor(new Color(255, 255, 255));
-		g.drawRect((int)this.getX(), (int)this.getY(), (int)this.getWidth(), (int)this.getHeight());
+		g.drawRect((int)this.getX() - camera.getCurrentOffsetX(), (int)this.getY() - camera.getCurrentOffsetY(), (int)this.getWidth(), (int)this.getHeight());
 		g.setColor(new Color(0, 255, 0));
-		g.drawRect((int)this.boundaryLeft.getX(), (int)this.boundaryLeft.getY(), (int)this.boundaryLeft.getWidth(), (int)this.boundaryLeft.getHeight());
-		g.drawRect((int)this.boundaryRight.getX(), (int)this.boundaryRight.getY(), (int)this.boundaryRight.getWidth(), (int)this.boundaryRight.getHeight());
+		g.drawRect((int)this.boundaryLeft.getX() - camera.getCurrentOffsetX(), (int)this.boundaryLeft.getY() - camera.getCurrentOffsetY(), (int)this.boundaryLeft.getWidth(), (int)this.boundaryLeft.getHeight());
+		g.drawRect((int)this.boundaryRight.getX() - camera.getCurrentOffsetX(), (int)this.boundaryRight.getY() - camera.getCurrentOffsetY(), (int)this.boundaryRight.getWidth(), (int)this.boundaryRight.getHeight());
 		g.setColor(new Color(255, 0, 0));
-		g.drawRect((int)this.boundaryTop.getX(), (int)this.boundaryTop.getY(), (int)this.boundaryTop.getWidth(), (int)this.boundaryTop.getHeight());
-		g.drawRect((int)this.boundaryBottom.getX(), (int)this.boundaryBottom.getY(), (int)this.boundaryBottom.getWidth(), (int)this.boundaryBottom.getHeight());
+		g.drawRect((int)this.boundaryTop.getX() - camera.getCurrentOffsetX(), (int)this.boundaryTop.getY() - camera.getCurrentOffsetY(), (int)this.boundaryTop.getWidth(), (int)this.boundaryTop.getHeight());
+		g.drawRect((int)this.boundaryBottom.getX() - camera.getCurrentOffsetX(), (int)this.boundaryBottom.getY() - camera.getCurrentOffsetY(), (int)this.boundaryBottom.getWidth(), (int)this.boundaryBottom.getHeight());
 	}
 	
 	//Getters and Setters
