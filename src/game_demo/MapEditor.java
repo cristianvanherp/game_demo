@@ -49,7 +49,7 @@ public class MapEditor extends Space {
 
 	public void animate() {
 		try {
-			this.map.animate();
+			this.map.animate(this.getCamera());
 		}
 		catch(ConcurrentModificationException e){}
 	}

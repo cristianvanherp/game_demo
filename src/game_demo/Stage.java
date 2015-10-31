@@ -57,7 +57,7 @@ public class Stage extends Space {
 	}
 	
 	public void animate() {
-		this.map.animate();
+		this.map.animate(this.getCamera());
 	}
 	
 	public void keyEvent() {

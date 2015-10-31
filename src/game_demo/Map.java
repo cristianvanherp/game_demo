@@ -81,13 +81,13 @@ public class Map implements Serializable {
 		this.getOnScreenThings(camera);
 	}
 	
-	public void animate() {
-		for(List<Thing> thingRow: this.things) {
-			for(Thing thingCol: thingRow) {
-				if(thingCol != null)
-					thingCol.animate();
+	public void animate(Camera camera) {
+		for(Thing thing: this.getOnScreenThings(camera)) {
+			if(thing != null) {
+				thing.animate();
 			}
 		}
+		
 		for(Entity entity: this.entities) {
 			if(entity != null) {
 				entity.animate();	
