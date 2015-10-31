@@ -16,7 +16,8 @@ import javax.imageio.ImageIO;
 public class Map implements Serializable {
 	private String backgroundPath;
 	private transient BufferedImage background;
-	private List<List<GameObject>> gameObjects;
+	private List<List<Thing>> things;
+	private List<Entity> entities;
 	private int gravity, maxFallingSpeed, minItemWidth, minItemHeight;
 	
 	public Map(String backgroundPath, int gravity, int maxFallingSpeed, int minItemWidth, int minItemHeight) {
@@ -25,7 +26,8 @@ public class Map implements Serializable {
 		this.maxFallingSpeed = maxFallingSpeed;
 		this.minItemWidth = minItemWidth;
 		this.minItemHeight = minItemHeight;
-		this.gameObjects = new ArrayList<List<GameObject>>();
+		this.things = new ArrayList<List<Thing>>();
+		this.entities = new ArrayList<Entity>();
 		
 		try {
 			this.background = ImageIO.read(getClass().getResource(this.backgroundPath));
@@ -39,7 +41,8 @@ public class Map implements Serializable {
 		this.backgroundPath = backgroundPath;
 		this.gravity = gravity;
 		this.maxFallingSpeed = maxFallingSpeed;
-		this.gameObjects = new ArrayList<List<GameObject>>();
+		this.things = new ArrayList<List<Thing>>();
+		this.entities = new ArrayList<Entity>();
 		this.minItemWidth = minItemWidth;
 		this.minItemHeight = minItemHeight;
 	}
@@ -48,39 +51,60 @@ public class Map implements Serializable {
 		if(this.background != null)
 			g.drawImage(this.background, 0, 0, canvas);
 		
-		for(List<GameObject> gameObjectRow: this.gameObjects) {
-			for(GameObject gameObjectCol: gameObjectRow) {
-				if(gameObjectCol != null)
-					gameObjectCol.render(g, canvas, camera);
-//					gameObjectCol.renderBoundaries(g, canvas);
+		for(List<Thing> thingRow: this.things) {
+			for(Thing thingCol: thingRow) {
+				if(thingCol != null)
+					thingCol.render(g, canvas, camera);
+//					thingCol.renderBoundaries(g, canvas);
+			}
+		}
+		
+		for(Entity entity: this.entities) {
+			if(entity != null) {
+				entity.render(g, canvas, camera);
 			}
 		}
 	}
 	
 	public void tick() {
-		for(List<GameObject> gameObjectRow: this.gameObjects) {
-			for(GameObject gameObjectCol: gameObjectRow) {
-				if(gameObjectCol != null) {
-					gameObjectCol.tick(this.getGameObjectsCollision(gameObjectCol), this.getGravity(), this.getMaxFallingSpeed());	
+		for(List<Thing> thingRow: this.things) {
+			for(Thing thingCol: thingRow) {
+				if(thingCol != null) {
+					thingCol.tick(this.getGameObjectsCollision(thingCol), this.getGravity(), this.getMaxFallingSpeed());	
 				}
+			}
+		}
+		for(Entity entity: this.entities) {
+			if(entity != null) {
+				entity.tick(this.getGameObjectsCollision(entity), this.getGravity(), this.getMaxFallingSpeed());	
 			}
 		}
 	}
 	
 	public void animate() {
-		for(List<GameObject> gameObjectRow: this.gameObjects) {
-			for(GameObject gameObjectCol: gameObjectRow) {
-				if(gameObjectCol != null)
-					gameObjectCol.animate();
+		for(List<Thing> thingRow: this.things) {
+			for(Thing thingCol: thingRow) {
+				if(thingCol != null)
+					thingCol.animate();
+			}
+		}
+		for(Entity entity: this.entities) {
+			if(entity != null) {
+				entity.animate();	
 			}
 		}
 	}
 	
 	public void keyEvent(KeyboardInputListener keyboardInputListener) {
-		for(List<GameObject> gameObjectRow: this.gameObjects) {
-			for(GameObject gameObjectCol: gameObjectRow) {
-				if(gameObjectCol != null)
-					gameObjectCol.keyEvent(keyboardInputListener);
+		for(List<Thing> thingRow: this.things) {
+			for(Thing thingCol: thingRow) {
+				if(thingCol != null)
+					thingCol.keyEvent(keyboardInputListener);
+			}
+		}
+		for(Entity entity: this.entities) {
+			if(entity != null) {
+				entity.keyEvent(keyboardInputListener);	
 			}
 		}
 	}
@@ -97,31 +121,36 @@ public class Map implements Serializable {
 			gameObject.setY((int)validPoint.getY());
 		}
 		
-		int row = (int)gameObject.getY() / this.getMinItemHeight();
-		int col = (int)gameObject.getX() / this.getMinItemWidth();
-		List<GameObject> auxRow;
-		GameObject auxCol;
-		
-		try {
-			this.gameObjects.get(row);
+		if(gameObject instanceof Entity) {
+			this.entities.add((Entity)gameObject);
 		}
-		catch(IndexOutOfBoundsException e) {
-			for(int counter = 0 ; counter <= row ; counter++) {
-				this.gameObjects.add(new ArrayList<GameObject>());
+		else if(gameObject instanceof Thing) {
+			int row = (int)gameObject.getY() / this.getMinItemHeight();
+			int col = (int)gameObject.getX() / this.getMinItemWidth();
+			List<GameObject> auxRow;
+			GameObject auxCol;
+			
+			try {
+				this.things.get(row);
 			}
-		}
-		
-		try {
-			this.gameObjects.get(row).get(col);
-			if(this.gameObjects.get(row).get(col) == null)
-				this.gameObjects.get(row).set(col, gameObject);
-		}
-		catch(IndexOutOfBoundsException e) {
-			for(int counter = 0 ; counter <= col ; counter++) {
-				this.gameObjects.get(row).add(null);
+			catch(IndexOutOfBoundsException e) {
+				for(int counter = 0 ; counter <= row ; counter++) {
+					this.things.add(new ArrayList<Thing>());
+				}
 			}
-			if(this.gameObjects.get(row).get(col) == null)
-				this.gameObjects.get(row).set(col, gameObject);
+			
+			try {
+				this.things.get(row).get(col);
+				if(this.things.get(row).get(col) == null)
+					this.things.get(row).set(col, (Thing)gameObject);
+			}
+			catch(IndexOutOfBoundsException e) {
+				for(int counter = 0 ; counter <= col ; counter++) {
+					this.things.get(row).add(null);
+				}
+				if(this.things.get(row).get(col) == null)
+					this.things.get(row).set(col, (Thing)gameObject);
+			}
 		}
 		
 		return true;
@@ -130,12 +159,20 @@ public class Map implements Serializable {
 	private boolean isPositionValid(int x, int y, int width, int height) {
 		Bound testBound = new Bound(x, y, width, height);
 		
-		for(List<GameObject> gameObjectRow: this.gameObjects) {
-			for(GameObject gameObjectCol: gameObjectRow) {
-				if(gameObjectCol != null) {
-					if(gameObjectCol.contains(x, y) || gameObjectCol.intersects(testBound)) {
+		for(List<Thing> thingRow: this.things) {
+			for(Thing thingCol: thingRow) {
+				if(thingCol != null) {
+					if(thingCol.contains(x, y) || thingCol.intersects(testBound)) {
 						return false;
 					}
+				}
+			}
+		}
+		
+		for(Entity entity: this.entities) {
+			if(entity != null) {
+				if(entity.contains(x, y) || entity.intersects(testBound)) {
+					return false;
 				}
 			}
 		}
@@ -153,11 +190,16 @@ public class Map implements Serializable {
 	public List<GameObject> getGameObjectsCollision(GameObject gameObject) {
 		List<GameObject> gameObjects = new ArrayList<GameObject>();
 		
-		for(List<GameObject> gameObjectRow: this.gameObjects) {
-			for(GameObject gameObjectCol: gameObjectRow) {
-				if(gameObjectCol != null)
-					gameObjects.add(gameObjectCol);
+		for(List<Thing> thingRow: this.things) {
+			for(Thing thingCol: thingRow) {
+				if(thingCol != null)
+					gameObjects.add(thingCol);
 			}
+		}
+		
+		for(Entity entity: this.entities) {
+			if(entity != null)
+				gameObjects.add(entity);
 		}
 		
 		return gameObjects;
@@ -166,11 +208,16 @@ public class Map implements Serializable {
 	public int countGameObjects() {
 		int count = 0;
 		
-		for(List<GameObject> gameObjectRow: this.gameObjects) {
-			for(GameObject gameObjectCol: gameObjectRow) {
-				if(gameObjectCol != null)
+		for(List<Thing> thingRow: this.things) {
+			for(Thing thingCol: thingRow) {
+				if(thingCol != null)
 					count++;
 			}
+		}
+		
+		for(Entity entity: this.entities) {
+			if(entity != null)
+				count++;
 		}
 		
 		return count;
@@ -179,11 +226,15 @@ public class Map implements Serializable {
 	public void reload() {
 		try {
 			this.background = ImageIO.read(getClass().getResource(this.backgroundPath));
-			for(List<GameObject> gameObjectRow: this.gameObjects) {
-				for(GameObject gameObjectCol: gameObjectRow) {
-					if(gameObjectCol != null)
-						gameObjectCol.getSpriteSheet().reload();
+			for(List<Thing> thingRow: this.things) {
+				for(Thing thingCol: thingRow) {
+					if(thingCol != null)
+						thingCol.getSpriteSheet().reload();
 				}
+			}
+			for(Entity entity: this.entities) {
+				if(entity != null)
+					entity.getSpriteSheet().reload();
 			}
 		}
 		catch (IOException e) {
@@ -206,14 +257,13 @@ public class Map implements Serializable {
 	}
 	
 	public Player getPlayer() {
-		for(List<GameObject> gameObjectRow: this.gameObjects) {
-			for(GameObject gameObjectCol: gameObjectRow) {
-				if(gameObjectCol != null) {
-					if(gameObjectCol instanceof Player)
-						return (Player)gameObjectCol;
-				}
+		for(Entity entity: this.entities) {
+			if(entity != null) {
+				if(entity instanceof Player)
+					return (Player)entity;
 			}
 		}
+		
 		return null;
 	}
 
@@ -232,14 +282,6 @@ public class Map implements Serializable {
 
 	public void setBackground(BufferedImage background) {
 		this.background = background;
-	}
-
-	public List<List<GameObject>> getGameObjects() {
-		return gameObjects;
-	}
-
-	public void setGameObjects(List<List<GameObject>> gameObjects) {
-		this.gameObjects = gameObjects;
 	}
 
 	public int getGravity() {
@@ -272,6 +314,22 @@ public class Map implements Serializable {
 
 	public void setMinItemHeight(int minItemHeight) {
 		this.minItemHeight = minItemHeight;
+	}
+
+	public List<List<Thing>> getThings() {
+		return things;
+	}
+
+	public void setThings(List<List<Thing>> things) {
+		this.things = things;
+	}
+
+	public List<Entity> getEntities() {
+		return entities;
+	}
+
+	public void setEntities(List<Entity> entities) {
+		this.entities = entities;
 	}
 	
 }
