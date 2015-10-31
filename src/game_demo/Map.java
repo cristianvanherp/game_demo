@@ -115,7 +115,7 @@ public class Map implements Serializable {
 	
 	//Utility functions
 	public boolean addGameObject(GameObject gameObject) {
-		if(gameObject.getWidth() > (this.getMinItemWidth() * this.getMaxWidthRate()) || gameObject.getHeight() > (this.getMinItemHeight() * this.getMaxHeightRate()))
+		if(gameObject instanceof Thing && (gameObject.getWidth() > (this.getMinItemWidth() * this.getMaxWidthRate()) || gameObject.getHeight() > (this.getMinItemHeight() * this.getMaxHeightRate())))
 			return false;
 		
 		Point validPoint = this.getClosestValidPoint((int)gameObject.getX(), (int)gameObject.getY());
