@@ -1,7 +1,10 @@
 package game_demo;
 
 import java.awt.Canvas;
+import java.awt.Cursor;
 import java.awt.Point;
+import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
 
@@ -14,6 +17,7 @@ public class Window extends JFrame {
 	public Window(String title) {
 		super();
 		this.title = title;
+		this.getContentPane().setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB), new Point(0, 0), "blank cursor"));
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setResizable(false);
 		this.setLocation(new Point(0, 0));

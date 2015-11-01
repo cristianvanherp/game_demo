@@ -59,6 +59,7 @@ public abstract class Space extends Canvas implements Runnable, InputSensible {
 		this.mouseInputListener = new MouseInputListener(this);
 		this.addKeyListener(this.keyboardInputListener);
 		this.addMouseListener(this.mouseInputListener);
+		this.addMouseMotionListener(this.mouseInputListener);
 		this.requestFocus();
 	}
 	

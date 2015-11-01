@@ -70,4 +70,8 @@ public class Stage extends Space {
 	public void mouseEvent(MouseEvent mouseEvent) {
 		
 	}
+	
+	public void mouseMoved(MouseEvent mouseEvent) {
+		
+	}
 }

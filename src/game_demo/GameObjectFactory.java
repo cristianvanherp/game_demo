@@ -25,4 +25,9 @@ public class GameObjectFactory {
 		SpriteSheet spriteSheet = new SpriteSheet(spritePath, 1, 1, spriteWidth, spriteHeight, 0, 0, 0, 0);
 		return new Block(factoryMap.getMinItemWidth()*widthRate, factoryMap.getMinItemHeight()*heightRate, -100, -100, spriteSheet, false);
 	}
+	
+	public Player createPlayer(String spritePath, int widthRate, int heightRate, int spriteWidth, int spriteHeight) {
+		SpriteSheet spriteSheet = new SpriteSheet(spritePath, 4, 3, 32, 32, 1, 2, 4, 0);
+		return new Player(factoryMap.getMinItemWidth()*widthRate, factoryMap.getMinItemHeight()*heightRate, -100, -100, spriteSheet, true);
+	}
 }

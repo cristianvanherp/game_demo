@@ -2,8 +2,9 @@ package game_demo;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
-public class MouseInputListener implements MouseListener {
+public class MouseInputListener implements MouseListener, MouseMotionListener {
 	private InputSensible inputSensible;
 	
 	public MouseInputListener(InputSensible inputSensible) {
@@ -28,6 +29,14 @@ public class MouseInputListener implements MouseListener {
 
 	public void mouseReleased(MouseEvent e) {
 		
+	}
+
+	public void mouseDragged(MouseEvent arg0) {
+		
+	}
+
+	public void mouseMoved(MouseEvent arg0) {
+		this.inputSensible.mouseMoved(arg0);
 	}
 	
 }
