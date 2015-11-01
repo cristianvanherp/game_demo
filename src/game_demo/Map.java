@@ -342,7 +342,7 @@ public class Map implements Serializable {
 			}
 		}
 		
-		System.out.println("On Screen Things: " + things.size());
+//		System.out.println("On Screen Things: " + things.size());
 		
 		return things;
 	}
