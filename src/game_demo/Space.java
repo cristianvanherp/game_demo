@@ -43,13 +43,10 @@ public abstract class Space extends Canvas implements Runnable, InputSensible {
 			objIn.close();
 		}
 		catch (FileNotFoundException e) {
-			e.printStackTrace();
 		}
 		catch (IOException e) {
-			e.printStackTrace();
 		}
 		catch (ClassNotFoundException e) {
-			e.printStackTrace();
 		}
 		this.getMap().reload();
     }

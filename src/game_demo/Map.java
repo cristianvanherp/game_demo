@@ -114,6 +114,30 @@ public class Map implements Serializable {
 	}
 	
 	//Utility functions
+	public boolean removeGameObject(GameObject gameObject) {
+		if(gameObject == null)
+			return false;
+		
+		int thingRowIndex;
+		int thingColIndex;
+		
+		for(List<Thing> thingRow: this.things) {
+			if(thingRow.contains(gameObject)) {
+				thingRowIndex = this.things.indexOf(thingRow);
+				thingColIndex = things.get(thingRowIndex).indexOf((Thing)gameObject);
+				this.things.get(thingRowIndex).set(thingColIndex, null);
+				return true;
+			}
+		}
+		
+		if(this.entities.contains((Entity)gameObject)) {
+			this.entities.remove((Entity)gameObject);
+			return true;
+		}
+		
+		return false;
+	}
+	
 	public boolean addGameObject(GameObject gameObject) {
 		if(gameObject instanceof Thing && (gameObject.getWidth() > (this.getMinItemWidth() * this.getMaxWidthRate()) || gameObject.getHeight() > (this.getMinItemHeight() * this.getMaxHeightRate())))
 			return false;
@@ -161,6 +185,28 @@ public class Map implements Serializable {
 		}
 		
 		return true;
+	}
+	
+	public GameObject getGameObject(int x, int y) {
+		GameObject gameObject = null;
+		
+		for(List<Thing> thingRow: this.things) {
+			for(Thing thingCol: thingRow) {
+				if(thingCol != null) {
+					if(thingCol.contains(x, y))
+						return thingCol;
+				}
+			}
+		}
+		
+		for(Entity entity: this.entities) {
+			if(entity != null) {
+				if(entity.contains(x, y))
+					return entity;
+			}
+		}
+		
+		return null;
 	}
 	
 	private boolean isPositionValid(int x, int y, int width, int height) {
@@ -295,6 +341,8 @@ public class Map implements Serializable {
 				}
 			}
 		}
+		
+		System.out.println("On Screen Things: " + things.size());
 		
 		return things;
 	}

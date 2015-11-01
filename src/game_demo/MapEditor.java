@@ -15,6 +15,7 @@ public class MapEditor extends Space {
 	private List<Thing> things;
 	private List<Entity> entities;
 	private boolean listingThings;
+	private boolean isDeleting;
 	int currentSelectionIndex;
 	private GameObject selectedGameObject;
 	private Point currentCursorLocation;
@@ -54,12 +55,21 @@ public class MapEditor extends Space {
 		}
 		catch(ConcurrentModificationException e){}
 		
-		if(this.listingThings) {
-			for(int i = 0 ; i < this.gameObjectsNum ; i++)
-				g.drawImage(this.selectedGameObject.getSpriteSheet().slice(this.selectedGameObject.getSpriteSheet().getCurrentCol(), this.selectedGameObject.getSpriteSheet().getCurrentRow(), this.selectedGameObject.getSpriteSheet().getSpriteWidth(), this.selectedGameObject.getSpriteSheet().getSpriteHeight()), (int)this.currentCursorLocation.getX() + ((int)this.selectedGameObject.getWidth() * i), (int)this.currentCursorLocation.getY(), (int)this.selectedGameObject.getWidth(), (int)this.selectedGameObject.getHeight(), this);	
+		g.setColor(new Color(255, 255, 255));
+		if(this.isDeleting) {
+			for(int i = 0 ; i < this.gameObjectsNum ; i++) {
+				if(this.isDeleting)
+					g.fillRect((int)this.currentCursorLocation.getX() + (this.map.getMinItemWidth() * i), (int)this.currentCursorLocation.getY(), this.map.getMinItemWidth(), this.map.getMinItemHeight());
+			}
 		}
 		else {
-			g.drawImage(this.selectedGameObject.getSpriteSheet().slice(this.selectedGameObject.getSpriteSheet().getCurrentCol(), this.selectedGameObject.getSpriteSheet().getCurrentRow(), this.selectedGameObject.getSpriteSheet().getSpriteWidth(), this.selectedGameObject.getSpriteSheet().getSpriteHeight()), (int)this.currentCursorLocation.getX(), (int)this.currentCursorLocation.getY(), (int)this.selectedGameObject.getWidth(), (int)this.selectedGameObject.getHeight(), this);		
+			if(this.listingThings) {
+				for(int i = 0 ; i < this.gameObjectsNum ; i++)
+					g.drawImage(this.selectedGameObject.getSpriteSheet().slice(this.selectedGameObject.getSpriteSheet().getCurrentCol(), this.selectedGameObject.getSpriteSheet().getCurrentRow(), this.selectedGameObject.getSpriteSheet().getSpriteWidth(), this.selectedGameObject.getSpriteSheet().getSpriteHeight()), (int)this.currentCursorLocation.getX() + ((int)this.selectedGameObject.getWidth() * i), (int)this.currentCursorLocation.getY(), (int)this.selectedGameObject.getWidth(), (int)this.selectedGameObject.getHeight(), this);
+			}
+			else {
+				g.drawImage(this.selectedGameObject.getSpriteSheet().slice(this.selectedGameObject.getSpriteSheet().getCurrentCol(), this.selectedGameObject.getSpriteSheet().getCurrentRow(), this.selectedGameObject.getSpriteSheet().getSpriteWidth(), this.selectedGameObject.getSpriteSheet().getSpriteHeight()), (int)this.currentCursorLocation.getX(), (int)this.currentCursorLocation.getY(), (int)this.selectedGameObject.getWidth(), (int)this.selectedGameObject.getHeight(), this);		
+			}
 		}
 		
 		g.dispose();
@@ -99,6 +109,9 @@ public class MapEditor extends Space {
 		else if(this.getKeyboardInputListener().isKeyDown(KeyEvent.VK_DOWN)) {
 			this.getCamera().moveDown(this.moveSpeed);
 		}
+		if(this.getKeyboardInputListener().isKeyDown(KeyEvent.VK_D)) {
+			this.isDeleting = !this.isDeleting;
+		}
 		if(this.getKeyboardInputListener().isKeyDown(KeyEvent.VK_R)) {
 			this.gameObjectsNum++;
 		}
@@ -113,19 +126,27 @@ public class MapEditor extends Space {
 		Point point;
 		
 		if(mouseEvent.getButton() == MouseEvent.BUTTON1) {
-			if(this.listingThings) {
+			if(this.isDeleting) {
 				for(int i = 0 ; i < this.gameObjectsNum ; i++) {
-					GameObject gameObject = (GameObject)this.selectedGameObject.clone();
-					gameObject.setX((mouseEvent.getX() + this.getCamera().getCurrentOffsetX()) + (int)(i*gameObject.getWidth()));
-					gameObject.setY(mouseEvent.getY() + this.getCamera().getCurrentOffsetY());
-					this.map.addGameObject(gameObject);
+					this.map.removeGameObject(this.map.getGameObject(mouseEvent.getX() + this.getCamera().getCurrentOffsetX() + (int)(i * this.map.getMinItemWidth()), mouseEvent.getY() + this.getCamera().getCurrentOffsetY()));
+					
 				}
 			}
 			else {
-				GameObject gameObject = (GameObject)this.selectedGameObject.clone();
-				gameObject.setX(mouseEvent.getX() + this.getCamera().getCurrentOffsetX());
-				gameObject.setY(mouseEvent.getY() + this.getCamera().getCurrentOffsetY());
-				this.map.addGameObject(gameObject);
+				if(this.listingThings) {
+					for(int i = 0 ; i < this.gameObjectsNum ; i++) {
+						GameObject gameObject = (GameObject)this.selectedGameObject.clone();
+						gameObject.setX((mouseEvent.getX() + this.getCamera().getCurrentOffsetX()) + (int)(i*gameObject.getWidth()));
+						gameObject.setY(mouseEvent.getY() + this.getCamera().getCurrentOffsetY());
+						this.map.addGameObject(gameObject);
+					}
+				}
+				else {
+					GameObject gameObject = (GameObject)this.selectedGameObject.clone();
+					gameObject.setX(mouseEvent.getX() + this.getCamera().getCurrentOffsetX());
+					gameObject.setY(mouseEvent.getY() + this.getCamera().getCurrentOffsetY());
+					this.map.addGameObject(gameObject);
+				}
 			}
 		}
 		else if(mouseEvent.getButton() == MouseEvent.BUTTON2) {
@@ -143,10 +164,8 @@ public class MapEditor extends Space {
 			if(this.listingThings == true) {
 				try {
 					this.selectedGameObject = this.things.get(++this.currentSelectionIndex);
-					System.out.println(this.currentSelectionIndex);
 				}
 				catch(IndexOutOfBoundsException e) {
-					e.printStackTrace();
 					this.currentSelectionIndex = 0;
 					this.selectedGameObject = this.things.get(this.currentSelectionIndex);
 				}
@@ -157,7 +176,6 @@ public class MapEditor extends Space {
 					System.out.println(this.currentSelectionIndex);
 				}
 				catch(IndexOutOfBoundsException e) {
-					e.printStackTrace();
 					this.currentSelectionIndex = 0;
 					this.selectedGameObject = this.entities.get(this.currentSelectionIndex);
 				}
