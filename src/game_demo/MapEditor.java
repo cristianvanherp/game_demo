@@ -33,7 +33,7 @@ public class MapEditor extends Space {
 		this.configureThings();
 		this.configureEntities();
 		this.currentSelectionIndex = 0;
-		this.gameObjectsNum = 0;
+		this.gameObjectsNum = 1;
 		this.listingThings = true;
 		this.selectedGameObject = this.things.get(this.currentSelectionIndex);
 	}
@@ -54,7 +54,13 @@ public class MapEditor extends Space {
 		}
 		catch(ConcurrentModificationException e){}
 		
-		g.drawImage(this.selectedGameObject.getSpriteSheet().slice(this.selectedGameObject.getSpriteSheet().getCurrentCol(), this.selectedGameObject.getSpriteSheet().getCurrentRow(), this.selectedGameObject.getSpriteSheet().getSpriteWidth(), this.selectedGameObject.getSpriteSheet().getSpriteHeight()), (int)this.currentCursorLocation.getX(), (int)this.currentCursorLocation.getY(), (int)this.selectedGameObject.getWidth() + 1, (int)this.selectedGameObject.getHeight()+1, this);	
+		if(this.listingThings) {
+			for(int i = 0 ; i < this.gameObjectsNum ; i++)
+				g.drawImage(this.selectedGameObject.getSpriteSheet().slice(this.selectedGameObject.getSpriteSheet().getCurrentCol(), this.selectedGameObject.getSpriteSheet().getCurrentRow(), this.selectedGameObject.getSpriteSheet().getSpriteWidth(), this.selectedGameObject.getSpriteSheet().getSpriteHeight()), (int)this.currentCursorLocation.getX() + ((int)this.selectedGameObject.getWidth() * i), (int)this.currentCursorLocation.getY(), (int)this.selectedGameObject.getWidth(), (int)this.selectedGameObject.getHeight(), this);	
+		}
+		else {
+			g.drawImage(this.selectedGameObject.getSpriteSheet().slice(this.selectedGameObject.getSpriteSheet().getCurrentCol(), this.selectedGameObject.getSpriteSheet().getCurrentRow(), this.selectedGameObject.getSpriteSheet().getSpriteWidth(), this.selectedGameObject.getSpriteSheet().getSpriteHeight()), (int)this.currentCursorLocation.getX(), (int)this.currentCursorLocation.getY(), (int)this.selectedGameObject.getWidth(), (int)this.selectedGameObject.getHeight(), this);		
+		}
 		
 		g.dispose();
 		bs.show();
@@ -93,6 +99,13 @@ public class MapEditor extends Space {
 		else if(this.getKeyboardInputListener().isKeyDown(KeyEvent.VK_DOWN)) {
 			this.getCamera().moveDown(this.moveSpeed);
 		}
+		if(this.getKeyboardInputListener().isKeyDown(KeyEvent.VK_R)) {
+			this.gameObjectsNum++;
+		}
+		if(this.getKeyboardInputListener().isKeyDown(KeyEvent.VK_E)) {
+			if(this.gameObjectsNum > 1)
+				this.gameObjectsNum--;
+		}
 //		this.map.keyEvent(this.getKeyboardInputListener());
 	}
 	
@@ -100,10 +113,20 @@ public class MapEditor extends Space {
 		Point point;
 		
 		if(mouseEvent.getButton() == MouseEvent.BUTTON1) {
-			GameObject gameObject = (GameObject)this.selectedGameObject.clone();
-			gameObject.setX(mouseEvent.getX() + this.getCamera().getCurrentOffsetX());
-			gameObject.setY(mouseEvent.getY() + this.getCamera().getCurrentOffsetY());
-			this.map.addGameObject(gameObject);
+			if(this.listingThings) {
+				for(int i = 0 ; i < this.gameObjectsNum ; i++) {
+					GameObject gameObject = (GameObject)this.selectedGameObject.clone();
+					gameObject.setX((mouseEvent.getX() + this.getCamera().getCurrentOffsetX()) + (int)(i*gameObject.getWidth()));
+					gameObject.setY(mouseEvent.getY() + this.getCamera().getCurrentOffsetY());
+					this.map.addGameObject(gameObject);
+				}
+			}
+			else {
+				GameObject gameObject = (GameObject)this.selectedGameObject.clone();
+				gameObject.setX(mouseEvent.getX() + this.getCamera().getCurrentOffsetX());
+				gameObject.setY(mouseEvent.getY() + this.getCamera().getCurrentOffsetY());
+				this.map.addGameObject(gameObject);
+			}
 		}
 		else if(mouseEvent.getButton() == MouseEvent.BUTTON2) {
 			this.listingThings = !this.listingThings;
