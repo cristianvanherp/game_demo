@@ -3,8 +3,8 @@ package game_demo;
 import java.util.List;
 
 public class Game {
-	public static double FPS = 60;
-	public static double TPS = 65;
+	public static double FPS = 90;
+	public static double TPS = 60;
 	public static double APS = 7;
 	
 	public List<Space> spaces;

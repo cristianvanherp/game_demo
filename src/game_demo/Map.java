@@ -56,9 +56,8 @@ public class Map implements Serializable {
 		
 		for(Thing thing: this.getOnScreenThings(camera)) {
 			if(thing != null) {
-				if(thing != null)
-					thing.render(g, canvas, camera);
-//					thing.renderBoundaries(g, canvas, camera);
+				thing.render(g, canvas, camera);
+//				thing.renderBoundaries(g, canvas, camera);
 			}
 		}
 		
@@ -82,7 +81,6 @@ public class Map implements Serializable {
 			}
 		}
 		
-		this.getOnScreenThings(camera);
 	}
 	
 	public void animate(Camera camera) {

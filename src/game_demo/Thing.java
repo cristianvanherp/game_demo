@@ -24,7 +24,8 @@ public abstract class Thing extends GameObject {
 	}
 	
 	public void render(Graphics g, Canvas canvas, Camera camera) {
-		g.drawImage(this.getSpriteSheet().slice(0, 0, this.getSpriteSheet().getSpriteWidth(), this.getSpriteSheet().getSpriteHeight()), (int)this.getX() - camera.getCurrentOffsetX(), (int)this.getY() - camera.getCurrentOffsetY(), (int)this.getWidth(), (int)this.getHeight(), canvas);
+//		g.drawImage(this.getSpriteSheet().slice(0, 0, this.getSpriteSheet().getSpriteWidth(), this.getSpriteSheet().getSpriteHeight()), (int)this.getX() - camera.getCurrentOffsetX(), (int)this.getY() - camera.getCurrentOffsetY(), (int)this.getWidth(), (int)this.getHeight(), canvas);
+		g.drawImage(this.getSpriteSheet().getImage(), (int)this.getX() - camera.getCurrentOffsetX(), (int)this.getY() - camera.getCurrentOffsetY(), (int)this.getWidth(), (int)this.getHeight(), canvas);
 	}
 	
 	public void animate() {

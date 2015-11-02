@@ -210,6 +210,7 @@ public class MapEditor extends Space {
 		
 		this.things.add(GameObjectFactory.getInstance().createBlock("/block_grass_1.png", 1, 1, 40, 40));
 		this.things.add(GameObjectFactory.getInstance().createBlock("/block_mud_1.png", 1, 1, 40, 40));
+		this.things.add(GameObjectFactory.getInstance().createBlock("/block_qmark_1.png", 1, 1, 40, 40));
 	}
 	
 	public void configureEntities() {
