@@ -6,30 +6,18 @@ import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.util.List;
 
-public class Player extends Entity {
+public class Enemy extends Entity {
 
 	private static final long serialVersionUID = 8526821172606415336L;
 
-	public Player(int width, int height, int x, int y, SpriteSheet spriteSheet, boolean affectedByGravity) {
+	public Enemy(int width, int height, int x, int y, SpriteSheet spriteSheet, boolean affectedByGravity) {
 		super(width, height, x, y, spriteSheet, affectedByGravity);
+		this.setVelx(this.getSpeed());
+		this.getSpriteSheet().setCurrentRow(this.getSpriteSheet().getRowRight());
 	}
 	
 	public void keyEvent(KeyboardInputListener keyboardInputListener) {
-		if(keyboardInputListener.isKeyDown(KeyEvent.VK_LEFT)) {
-			this.setVelx(-this.getSpeed());
-			this.getSpriteSheet().setCurrentRow(this.getSpriteSheet().getRowLeft());
-		}
-		else if(keyboardInputListener.isKeyDown(KeyEvent.VK_RIGHT)) {
-			this.setVelx(this.getSpeed());
-			this.getSpriteSheet().setCurrentRow(this.getSpriteSheet().getRowRight());
-		}
-		else {
-			this.setVelx(0);
-		}
 		
-		if(keyboardInputListener.isKeyDown(KeyEvent.VK_SPACE)) {
-			this.jump();
-		}
 	}
 	
 	//Utility methods
@@ -54,10 +42,14 @@ public class Player extends Entity {
 			
 			if(this.isLeftColliding(gameObject) && gameObject != this) {
 				this.setX((int)gameObject.getMaxX());
+				this.setVelx(this.getSpeed());
+				this.getSpriteSheet().setCurrentRow(this.getSpriteSheet().getRowRight());
 			}
 			
 			if(this.isRightColliding(gameObject) && gameObject != this) {
 				this.setX((int)gameObject.getMinX() - this.width);
+				this.setVelx(-this.getSpeed());
+				this.getSpriteSheet().setCurrentRow(this.getSpriteSheet().getRowLeft());
 			}
 		}
 	}

@@ -138,6 +138,7 @@ public class MapEditor extends Space {
 						GameObject gameObject = (GameObject)this.selectedGameObject.clone();
 						gameObject.setX((mouseEvent.getX() + this.getCamera().getCurrentOffsetX()) + (int)(i*gameObject.getWidth()));
 						gameObject.setY(mouseEvent.getY() + this.getCamera().getCurrentOffsetY());
+						gameObject.setSpriteSheet(this.selectedGameObject.getSpriteSheet().clone());
 						this.map.addGameObject(gameObject);
 					}
 				}
@@ -145,6 +146,7 @@ public class MapEditor extends Space {
 					GameObject gameObject = (GameObject)this.selectedGameObject.clone();
 					gameObject.setX(mouseEvent.getX() + this.getCamera().getCurrentOffsetX());
 					gameObject.setY(mouseEvent.getY() + this.getCamera().getCurrentOffsetY());
+					gameObject.setSpriteSheet(this.selectedGameObject.getSpriteSheet().clone());
 					this.map.addGameObject(gameObject);
 				}
 			}
@@ -172,8 +174,7 @@ public class MapEditor extends Space {
 			}
 			else {
 				try {
-					this.selectedGameObject = this.entities.get(this.entities.indexOf(this.selectedGameObject)+1);
-					System.out.println(this.currentSelectionIndex);
+					this.selectedGameObject = this.entities.get(++this.currentSelectionIndex);
 				}
 				catch(IndexOutOfBoundsException e) {
 					this.currentSelectionIndex = 0;
@@ -206,14 +207,16 @@ public class MapEditor extends Space {
 	
 	//Utility Methods
 	public void configureThings() {
-		Block block;
-		
 		this.things.add(GameObjectFactory.getInstance().createBlock("/block_grass_1.png", 1, 1, 40, 40));
 		this.things.add(GameObjectFactory.getInstance().createBlock("/block_mud_1.png", 1, 1, 40, 40));
 		this.things.add(GameObjectFactory.getInstance().createBlock("/block_qmark_1.png", 1, 1, 40, 40));
 	}
 	
 	public void configureEntities() {
+		Entity entity;
 		this.entities.add(GameObjectFactory.getInstance().createPlayer("/spritesheet_1_player.png", 1, 1, 40, 40));
+		entity = GameObjectFactory.getInstance().createEnemy("/spritesheet_1_enemy.png", 1, 1, 40, 40);
+		entity.setSpeed(2f);
+		this.entities.add(entity);
 	}
 }

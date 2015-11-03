@@ -85,6 +85,10 @@ public class SpriteSheet implements Serializable {
 		return this.imageGrid.get(this.currentRow).get(this.currentCol);
 	}
 	
+	public SpriteSheet clone() {
+		return new SpriteSheet(this.imagePath, this.numRows, this.numCols, this.spriteWidth, this.spriteHeight, this.rowLeft, this.rowRight, this.rowTop, this.rowBottom);
+	}
+	
 	//	Getters and Setters
 	public int getNumRows() {
 		return numRows;
@@ -169,7 +173,13 @@ public class SpriteSheet implements Serializable {
 	public void setImage(BufferedImage image) {
 		this.image = image;
 	}
-	
-	
+
+	public String getImagePath() {
+		return imagePath;
+	}
+
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
+	}
 	
 }
