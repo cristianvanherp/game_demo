@@ -35,7 +35,7 @@ public abstract class GameObject extends Bound {
 		this.y = y;
 		this.affectedByGravity = affectedByGravity;
 		this.jumpSpeed = 17;
-		this.speed = 5;
+		this.speed = 3;
 		if(this.affectedByGravity)
 			this.vely = -1;
 
