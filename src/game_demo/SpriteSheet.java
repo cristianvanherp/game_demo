@@ -4,12 +4,15 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.Serializable;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 
 public class SpriteSheet implements Serializable {
 	private String imagePath;
 	private transient BufferedImage image;
+	private transient List<List<BufferedImage>> imageGrid;
 	private int numRows, numCols;
 	private int currentRow, currentCol;
 	private int spriteWidth, spriteHeight;
@@ -33,6 +36,8 @@ public class SpriteSheet implements Serializable {
 		catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		this.configureGrid();
 	}
 	
 	public BufferedImage slice(int col, int row, int width, int height) {
@@ -55,10 +60,29 @@ public class SpriteSheet implements Serializable {
 	public void reload() {
 		try {
 			this.image = ImageIO.read(getClass().getResource(this.imagePath));
+			this.configureGrid();
 		}
 		catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private void configureGrid() {
+		this.imageGrid = new ArrayList<List<BufferedImage>>();
+		
+		for(int row = 0 ; row < this.numRows ; row++) {
+			this.imageGrid.add(new ArrayList<BufferedImage>());
+		}
+		
+		for(int row = 0 ; row < this.numRows ; row++) {
+			for(int col = 0 ; col < this.numCols ; col++) {
+				this.imageGrid.get(row).add(this.slice(col, row, this.spriteWidth, this.spriteHeight));
+			}
+		}
+	}
+	
+	public BufferedImage getCurrent() {
+		return this.imageGrid.get(this.currentRow).get(this.currentCol);
 	}
 	
 	//	Getters and Setters
@@ -145,5 +169,7 @@ public class SpriteSheet implements Serializable {
 	public void setImage(BufferedImage image) {
 		this.image = image;
 	}
+	
+	
 	
 }
