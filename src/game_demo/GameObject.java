@@ -11,7 +11,7 @@ public abstract class GameObject extends Bound {
 	private static int sideBoundWidthRate = 15;
 	private static int centerBoundHeightRate = 50;
 	private static int centerBoundWidthRate = 60;
-	private int velx, vely, speed;
+	private float velx, vely, speed;
 	private SpriteSheet spriteSheet;
 	private boolean falling;
 	private int jumpSpeed;
@@ -29,12 +29,11 @@ public abstract class GameObject extends Bound {
 		this.speed = speed;
 		this.spriteSheet = spriteSheet;
 		this.falling = false;
-		this.jumpSpeed = jumpSpeed;
 		this.canJump = false;
 		this.x = x;
 		this.y = y;
 		this.affectedByGravity = affectedByGravity;
-		this.jumpSpeed = 17;
+		this.jumpSpeed = 12;
 		this.speed = 3;
 		if(this.affectedByGravity)
 			this.vely = -1;
@@ -50,7 +49,7 @@ public abstract class GameObject extends Bound {
 		this.adjustBoundaries();
 	}
 	
-	public abstract void tick(List<GameObject> gameObjects, int gravity, int maxFallSpeed);
+	public abstract void tick(List<GameObject> gameObjects, float gravity, int maxFallSpeed);
 	public abstract void render(Graphics g, Canvas canvas, Camera camera);
 	public abstract void animate();
 	public abstract void keyEvent(KeyboardInputListener keyboardInputListener);
@@ -77,27 +76,27 @@ public abstract class GameObject extends Bound {
 		this.adjustBoundaries();
 	}
 	
-	public void setVelx(int velx) {
+	public void setVelx(float velx) {
 		this.velx = velx;
 	}
 	
-	public int getVelx() {
+	public float getVelx() {
 		return this.velx;
 	}
 	
-	public void setVely(int vely) {
+	public void setVely(float vely) {
 		this.vely = vely;
 	}
 	
-	public int getVely() {
+	public float getVely() {
 		return this.vely;
 	}
 	
-	public void setSpeed(int speed) {
+	public void setSpeed(float speed) {
 		this.speed = speed;
 	}
 	
-	public int getSpeed() {
+	public float getSpeed() {
 		return this.speed;
 	}
 	

@@ -14,7 +14,7 @@ public class Stage extends Space {
 	private static final long serialVersionUID = -5457552461161287550L;
 	Player player;
 
-	public Stage(double FPS, double TPS, double APS, String backgroundPath, int gravity, int maxFallingSpeed, String mapPath) {
+	public Stage(double FPS, double TPS, double APS, String backgroundPath, float gravity, int maxFallingSpeed, String mapPath) {
 		super(FPS, TPS, APS, backgroundPath, gravity, maxFallingSpeed, mapPath);
 		this.setPreferredSize(new Dimension(Window.WIDTH, Window.HEIGHT));
 		this.setMinimumSize(new Dimension(Window.WIDTH, Window.HEIGHT));

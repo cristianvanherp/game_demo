@@ -21,7 +21,7 @@ public class MapEditor extends Space {
 	private Point currentCursorLocation;
 	private int gameObjectsNum;
 
-	public MapEditor(double FPS, double TPS, double APS, String backgroundPath, int gravity, int maxFallingSpeed, int blockWidth, int blockHeight, int moveSpeed, String mapPath) {
+	public MapEditor(double FPS, double TPS, double APS, String backgroundPath, float gravity, int maxFallingSpeed, int blockWidth, int blockHeight, int moveSpeed, String mapPath) {
 		super(FPS, TPS, APS, backgroundPath, gravity, maxFallingSpeed, mapPath);
 		this.blockWidth = blockWidth;
 		this.blockHeight = blockHeight;

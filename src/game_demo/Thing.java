@@ -12,12 +12,12 @@ public abstract class Thing extends GameObject {
 	}
 	
 	//Game Object methods
-	public void tick(List<GameObject> gameObjects, int gravity, int maxFallSpeed) {
+	public void tick(List<GameObject> gameObjects, float gravity, int maxFallSpeed) {
 		if(this.isFalling() && this.getVely() <= maxFallSpeed)
 			this.setVely(this.getVely() + gravity);
 		
-		this.setX(this.x + this.getVelx());
-		this.setY(this.y + this.getVely());
+		this.setX(this.x + (int)this.getVelx());
+		this.setY(this.y + (int)this.getVely());
 		
 		if(this.getVelx() != 0 || this.getVely() != 0)
 			this.handleCollision(gameObjects);

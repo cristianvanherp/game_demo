@@ -18,10 +18,10 @@ public class Map implements Serializable {
 	private transient BufferedImage background;
 	private List<List<Thing>> things;
 	private List<Entity> entities;
-	private int gravity, maxFallingSpeed, minItemWidth, minItemHeight, maxWidthRate, maxHeightRate;
+	private int maxFallingSpeed, minItemWidth, minItemHeight, maxWidthRate, maxHeightRate;
+	private float gravity;
 	
-	
-	public Map(String backgroundPath, int gravity, int maxFallingSpeed, int minItemWidth, int minItemHeight) {
+	public Map(String backgroundPath, float gravity, int maxFallingSpeed, int minItemWidth, int minItemHeight) {
 		this.backgroundPath = backgroundPath;
 		this.gravity = gravity;
 		this.maxFallingSpeed = maxFallingSpeed;
@@ -395,11 +395,11 @@ public class Map implements Serializable {
 		this.background = background;
 	}
 
-	public int getGravity() {
+	public float getGravity() {
 		return gravity;
 	}
 
-	public void setGravity(int gravity) {
+	public void setGravity(float gravity) {
 		this.gravity = gravity;
 	}
 

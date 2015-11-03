@@ -18,14 +18,20 @@ public abstract class Space extends Canvas implements Runnable, InputSensible {
 	private Thread thread;
 	Map map;
 	
-	public Space(double FPS, double TPS, double APS, String backgroundPath, int gravity, int maxFallingSpeed, String mapPath) {
+	public Space(double FPS, double TPS, double APS, String backgroundPath, float gravity, int maxFallingSpeed, String mapPath) {
 		this.FPS = FPS;
 		this.TPS = TPS;
 		this.APS = APS;
-		this.map = new Map(backgroundPath, gravity, maxFallingSpeed, 40, 40);
 		this.camera = new Camera(1000, 1000);
 		this.mapPath = mapPath;
 		this.loadMap();
+		if(this.getMap() == null) {
+			this.map = new Map(backgroundPath, gravity, maxFallingSpeed, 40, 40);
+		}
+		else {
+			this.map.setGravity(gravity);
+			this.map.setMaxFallingSpeed(maxFallingSpeed);
+		}
 		this.setPreferredSize(new Dimension(Window.WIDTH, Window.HEIGHT));
 		this.setMinimumSize(new Dimension(Window.WIDTH, Window.HEIGHT));
 		this.setMaximumSize(new Dimension(Window.WIDTH, Window.HEIGHT));
@@ -48,7 +54,8 @@ public abstract class Space extends Canvas implements Runnable, InputSensible {
 		}
 		catch (ClassNotFoundException e) {
 		}
-		this.getMap().reload();
+		if(this.getMap() != null)
+			this.getMap().reload();
     }
 	
 	public void init() {
