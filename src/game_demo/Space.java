@@ -22,7 +22,7 @@ public abstract class Space extends Canvas implements Runnable, InputSensible {
 		this.FPS = FPS;
 		this.TPS = TPS;
 		this.APS = APS;
-		this.camera = new Camera(1000, 1000);
+		this.camera = new Camera();
 		this.mapPath = mapPath;
 		this.loadMap();
 		if(this.getMap() == null) {

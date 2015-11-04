@@ -352,10 +352,10 @@ public class Map implements Serializable {
 		int objectCol = (int)gameObject.getX()/this.getMinItemWidth();
 		int objectRow = (int)gameObject.getY()/this.getMinItemHeight();
 	
-		int minCol = objectCol - 3;
-		int minRow = objectRow - 3;
-		int maxCol = objectCol + 3;
-		int maxRow = objectRow + 3;
+		int minCol = objectCol - 2;
+		int minRow = objectRow - 2;
+		int maxCol = objectCol + 2;
+		int maxRow = objectRow + 2;
 		
 		if(minCol < 0)
 			minCol = 0;
