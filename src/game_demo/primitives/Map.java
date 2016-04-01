@@ -1,4 +1,4 @@
-package game_demo;
+package game_demo.primitives;
 
 import java.awt.Canvas;
 import java.awt.Graphics;
@@ -12,6 +12,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.imageio.ImageIO;
+
+import game_demo.bases.GameObject;
+import game_demo.bases.Thing;
+import game_demo.listeners.KeyboardInputListener;
+import game_demo.things.Entity;
+import game_demo.things.Player;
 
 public class Map implements Serializable {
 	private String backgroundPath;

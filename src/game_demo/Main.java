@@ -4,6 +4,10 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
+import game_demo.bases.Space;
+import game_demo.spaces.MapEditor;
+import game_demo.spaces.Stage;
+
 public class Main {
 	public static void main(String args[]) {
 		List<Space> spaces = new ArrayList();

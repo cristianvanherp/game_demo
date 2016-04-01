@@ -1,4 +1,4 @@
-package game_demo;
+package game_demo.spaces;
 
 import java.awt.Canvas;
 import java.awt.Color;
@@ -9,6 +9,10 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
 import java.util.List;
+
+import game_demo.bases.Space;
+import game_demo.primitives.Window;
+import game_demo.things.Player;
 
 public class Stage extends Space {
 	private static final long serialVersionUID = -5457552461161287550L;
@@ -44,27 +48,27 @@ public class Stage extends Space {
 		Graphics g = bs.getDrawGraphics();
 		g.setColor(new Color(0, 0, 0));
 		g.fillRect(0, 0, Window.WIDTH, Window.HEIGHT);
-		this.map.render(g, this, this.getCamera());
+		this.getMap().render(g, this, this.getCamera());
 		
 		g.dispose();
 		bs.show();
 	}
 	
 	public void tick() {
-		this.map.tick(this.getCamera());
+		this.getMap().tick(this.getCamera());
 		if(this.player != null)
 			this.adjustPlayerBasedOffset();
 	}
 	
 	public void animate() {
-		this.map.animate(this.getCamera());
+		this.getMap().animate(this.getCamera());
 	}
 	
 	public void keyEvent() {
 		if(this.getKeyboardInputListener().isKeyDown(KeyEvent.VK_ESCAPE)) {
 			this.stop();
 		}
-		this.map.keyEvent(this.getKeyboardInputListener(), this.getCamera());
+		this.getMap().keyEvent(this.getKeyboardInputListener(), this.getCamera());
 	}
 	
 	public void mouseEvent(MouseEvent mouseEvent) {

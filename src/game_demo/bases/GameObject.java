@@ -1,9 +1,14 @@
-package game_demo;
+package game_demo.bases;
 
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.List;
+
+import game_demo.listeners.KeyboardInputListener;
+import game_demo.primitives.Bound;
+import game_demo.primitives.Camera;
+import game_demo.primitives.SpriteSheet;
 
 public abstract class GameObject extends Bound {
 	private Bound boundaryLeft, boundaryRight, boundaryTop, boundaryBottom;

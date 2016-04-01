@@ -1,10 +1,15 @@
-package game_demo;
+package game_demo.things;
 
 import java.awt.Canvas;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
+
+import game_demo.bases.GameObject;
+import game_demo.listeners.KeyboardInputListener;
+import game_demo.primitives.Camera;
+import game_demo.primitives.SpriteSheet;
 
 public abstract class Entity extends GameObject {
 	

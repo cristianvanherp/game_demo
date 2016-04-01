@@ -1,9 +1,13 @@
-package game_demo;
+package game_demo.bases;
 
 import java.awt.Canvas;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.util.List;
+
+import game_demo.listeners.KeyboardInputListener;
+import game_demo.primitives.Camera;
+import game_demo.primitives.SpriteSheet;
 
 public abstract class Thing extends GameObject {
 	

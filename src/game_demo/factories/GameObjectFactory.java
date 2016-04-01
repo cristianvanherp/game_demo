@@ -1,4 +1,10 @@
-package game_demo;
+package game_demo.factories;
+
+import game_demo.primitives.Map;
+import game_demo.primitives.SpriteSheet;
+import game_demo.things.Block;
+import game_demo.things.Enemy;
+import game_demo.things.Player;
 
 public class GameObjectFactory {
 	

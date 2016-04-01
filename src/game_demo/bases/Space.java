@@ -1,4 +1,4 @@
-package game_demo;
+package game_demo.bases;
 
 import java.awt.Canvas;
 import java.awt.Dimension;
@@ -8,6 +8,13 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
+import game_demo.interfaces.InputSensible;
+import game_demo.listeners.KeyboardInputListener;
+import game_demo.listeners.MouseInputListener;
+import game_demo.primitives.Camera;
+import game_demo.primitives.Map;
+import game_demo.primitives.Window;
+
 public abstract class Space extends Canvas implements Runnable, InputSensible {
 	private double FPS, TPS, APS;
 	private Camera camera;
@@ -16,7 +23,7 @@ public abstract class Space extends Canvas implements Runnable, InputSensible {
 	private KeyboardInputListener keyboardInputListener;
 	private MouseInputListener mouseInputListener;
 	private Thread thread;
-	Map map;
+	private Map map;
 	
 	public Space(double FPS, double TPS, double APS, String backgroundPath, float gravity, int maxFallingSpeed, String mapPath) {
 		this.FPS = FPS;

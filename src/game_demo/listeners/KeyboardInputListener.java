@@ -1,9 +1,11 @@
-package game_demo;
+package game_demo.listeners;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
+
+import game_demo.interfaces.InputSensible;
 
 public class KeyboardInputListener extends KeyAdapter {
 	private List<Integer> keysDown;

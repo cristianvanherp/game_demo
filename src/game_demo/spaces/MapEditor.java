@@ -1,4 +1,4 @@
-package game_demo;
+package game_demo.spaces;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -9,6 +9,13 @@ import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.List;
+
+import game_demo.bases.GameObject;
+import game_demo.bases.Space;
+import game_demo.bases.Thing;
+import game_demo.factories.GameObjectFactory;
+import game_demo.primitives.Window;
+import game_demo.things.Entity;
 
 public class MapEditor extends Space {
 	private int blockWidth, blockHeight, moveSpeed;
@@ -51,7 +58,7 @@ public class MapEditor extends Space {
 		g.setColor(new Color(0, 0, 0));
 		g.fillRect(0, 0, Window.WIDTH, Window.HEIGHT);
 		try {
-			this.map.render(g, this, this.getCamera());	
+			this.getMap().render(g, this, this.getCamera());	
 		}
 		catch(ConcurrentModificationException e){}
 		
@@ -59,7 +66,7 @@ public class MapEditor extends Space {
 		if(this.isDeleting) {
 			for(int i = 0 ; i < this.gameObjectsNum ; i++) {
 				if(this.isDeleting)
-					g.fillRect((int)this.currentCursorLocation.getX() + (this.map.getMinItemWidth() * i), (int)this.currentCursorLocation.getY(), this.map.getMinItemWidth(), this.map.getMinItemHeight());
+					g.fillRect((int)this.currentCursorLocation.getX() + (this.getMap().getMinItemWidth() * i), (int)this.currentCursorLocation.getY(), this.getMap().getMinItemWidth(), this.getMap().getMinItemHeight());
 			}
 		}
 		else {
@@ -78,14 +85,14 @@ public class MapEditor extends Space {
 
 	public void tick() {
 		try {
-			this.map.tick(this.getCamera());
+			this.getMap().tick(this.getCamera());
 		}
 		catch(ConcurrentModificationException e){}
 	}
 
 	public void animate() {
 		try {
-			this.map.animate(this.getCamera());
+			this.getMap().animate(this.getCamera());
 		}
 		catch(ConcurrentModificationException e){}
 	}
@@ -119,7 +126,7 @@ public class MapEditor extends Space {
 			if(this.gameObjectsNum > 1)
 				this.gameObjectsNum--;
 		}
-//		this.map.keyEvent(this.getKeyboardInputListener());
+//		this.getMap().keyEvent(this.getKeyboardInputListener());
 	}
 	
 	public void mouseEvent(MouseEvent mouseEvent) {
@@ -128,7 +135,7 @@ public class MapEditor extends Space {
 		if(mouseEvent.getButton() == MouseEvent.BUTTON1) {
 			if(this.isDeleting) {
 				for(int i = 0 ; i < this.gameObjectsNum ; i++) {
-					this.map.removeGameObject(this.map.getGameObject(mouseEvent.getX() + this.getCamera().getCurrentOffsetX() + (int)(i * this.map.getMinItemWidth()), mouseEvent.getY() + this.getCamera().getCurrentOffsetY()));
+					this.getMap().removeGameObject(this.getMap().getGameObject(mouseEvent.getX() + this.getCamera().getCurrentOffsetX() + (int)(i * this.getMap().getMinItemWidth()), mouseEvent.getY() + this.getCamera().getCurrentOffsetY()));
 					
 				}
 			}
@@ -139,7 +146,7 @@ public class MapEditor extends Space {
 						gameObject.setX((mouseEvent.getX() + this.getCamera().getCurrentOffsetX()) + (int)(i*gameObject.getWidth()));
 						gameObject.setY(mouseEvent.getY() + this.getCamera().getCurrentOffsetY());
 						gameObject.setSpriteSheet(this.selectedGameObject.getSpriteSheet().clone());
-						this.map.addGameObject(gameObject);
+						this.getMap().addGameObject(gameObject);
 					}
 				}
 				else {
@@ -147,7 +154,7 @@ public class MapEditor extends Space {
 					gameObject.setX(mouseEvent.getX() + this.getCamera().getCurrentOffsetX());
 					gameObject.setY(mouseEvent.getY() + this.getCamera().getCurrentOffsetY());
 					gameObject.setSpriteSheet(this.selectedGameObject.getSpriteSheet().clone());
-					this.map.addGameObject(gameObject);
+					this.getMap().addGameObject(gameObject);
 				}
 			}
 		}

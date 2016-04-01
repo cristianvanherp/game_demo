@@ -1,4 +1,4 @@
-package game_demo;
+package game_demo.primitives;
 
 public class Camera {
 	private int maxOffsetX, maxOffsetY, currentOffsetX, currentOffsetY;

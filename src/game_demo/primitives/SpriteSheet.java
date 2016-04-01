@@ -1,4 +1,4 @@
-package game_demo;
+package game_demo.primitives;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;

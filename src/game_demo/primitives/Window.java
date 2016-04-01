@@ -1,4 +1,4 @@
-package game_demo;
+package game_demo.primitives;
 
 import java.awt.Canvas;
 import java.awt.Cursor;
@@ -9,8 +9,8 @@ import java.awt.image.BufferedImage;
 import javax.swing.JFrame;
 
 public class Window extends JFrame {
-	public static int WIDTH = 800;
-	public static int HEIGHT = 600;
+	public static int WIDTH = 1440;
+	public static int HEIGHT = 900;
 	public Canvas currentCanvas;
 	public String title;
 	

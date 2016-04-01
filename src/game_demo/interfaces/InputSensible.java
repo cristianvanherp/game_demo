@@ -1,4 +1,4 @@
-package game_demo;
+package game_demo.interfaces;
 
 import java.awt.event.MouseEvent;
 

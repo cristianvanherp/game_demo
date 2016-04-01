@@ -1,9 +1,14 @@
-package game_demo;
+package game_demo.things;
 
 import java.awt.Canvas;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.util.List;
+
+import game_demo.bases.GameObject;
+import game_demo.bases.Thing;
+import game_demo.listeners.KeyboardInputListener;
+import game_demo.primitives.SpriteSheet;
 
 public class Block extends Thing {
 
